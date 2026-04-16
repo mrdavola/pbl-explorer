@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSoundEffects } from "@/lib/hooks/use-sound-effects";
 
 interface ScenarioQuizProps {
   question: string;
@@ -25,11 +26,13 @@ export function ScenarioQuiz({
   const [selected, setSelected] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
   const isCorrect = selected !== null && options[selected]?.correct;
+  const { play } = useSoundEffects();
 
   function handleSelect(index: number) {
     if (answered) return;
     setSelected(index);
     setAnswered(true);
+    play(options[index]?.correct ? 'correct' : 'incorrect');
   }
 
   return (

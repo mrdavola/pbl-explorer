@@ -8,13 +8,13 @@ import { modules, getModuleBySlug } from "@/lib/data/modules";
 import { useProgress } from "@/lib/hooks/use-progress";
 
 /* Step loaders per module */
-import { module1Steps } from "@/lib/data/steps/module-1";
-import { module2Steps } from "@/lib/data/steps/module-2";
-import { module3Steps } from "@/lib/data/steps/module-3";
-import { module4Steps } from "@/lib/data/steps/module-4";
-import { module5Steps } from "@/lib/data/steps/module-5";
-import { module6Steps } from "@/lib/data/steps/module-6";
-import { module7Steps } from "@/lib/data/steps/module-7";
+import { module1Steps, module1NarrateTexts } from "@/lib/data/steps/module-1";
+import { module2Steps, module2NarrateTexts } from "@/lib/data/steps/module-2";
+import { module3Steps, module3NarrateTexts } from "@/lib/data/steps/module-3";
+import { module4Steps, module4NarrateTexts } from "@/lib/data/steps/module-4";
+import { module5Steps, module5NarrateTexts } from "@/lib/data/steps/module-5";
+import { module6Steps, module6NarrateTexts } from "@/lib/data/steps/module-6";
+import { module7Steps, module7NarrateTexts } from "@/lib/data/steps/module-7";
 
 const stepsBySlug: Record<string, React.ComponentType<{ onNext: () => void }>[]> = {
   "what-is-pbl": module1Steps,
@@ -26,6 +26,16 @@ const stepsBySlug: Record<string, React.ComponentType<{ onNext: () => void }>[]>
   "pbl-and-ai": module7Steps,
 };
 
+const narrateBySlug: Record<string, string[]> = {
+  "what-is-pbl": module1NarrateTexts,
+  "learning-narrative": module2NarrateTexts,
+  "start-small": module3NarrateTexts,
+  "gold-standard": module4NarrateTexts,
+  "design-thinking": module5NarrateTexts,
+  "alphabet-soup": module6NarrateTexts,
+  "pbl-and-ai": module7NarrateTexts,
+};
+
 function getStepsForModule(slug: string) {
   return stepsBySlug[slug] || null;
 }
@@ -35,6 +45,7 @@ export default function ModulePage() {
   const router = useRouter();
   const slug = params.slug as string;
   const mod = getModuleBySlug(slug);
+  const ModuleIcon = mod?.icon;
   const { completeModule, addXp, setModuleStep, progress, loaded } = useProgress();
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -69,7 +80,7 @@ export default function ModulePage() {
   if (!steps) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[100dvh] gap-4 px-6 text-center">
-        <div className="text-5xl">{mod.icon}</div>
+        {ModuleIcon && <ModuleIcon size={48} />}
         <h1 className="text-2xl font-bold">{mod.title}</h1>
         <p className="text-muted-foreground">This module is coming soon!</p>
         <button
@@ -99,6 +110,7 @@ export default function ModulePage() {
   }
 
   const StepComponent = steps[currentStep];
+  const narrateTexts = narrateBySlug[slug];
 
   return (
     <LessonShell
@@ -108,6 +120,8 @@ export default function ModulePage() {
       currentStep={currentStep}
       onStepChange={handleStepChange}
       onComplete={handleComplete}
+      narrateText={narrateTexts?.[currentStep]}
+      lessonSlug={slug}
     >
       <StepComponent
         onNext={() => {

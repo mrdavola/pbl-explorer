@@ -3,8 +3,13 @@
 import { useState } from "react";
 import { ScenarioQuiz } from "@/components/interactions/scenario-quiz";
 import { FlipCardGrid } from "@/components/interactions/flip-card";
+import { ChoiceCards } from "@/components/interactions/choice-cards";
+import { ReflectionPrompt } from "@/components/interactions/reflection-prompt";
+import { GoDeeper } from "@/components/learn/go-deeper";
 import { ContinueButton } from "@/components/learn/lesson-shell";
 import { motion } from "framer-motion";
+import { Zap, Clock, Calendar, CalendarRange } from "lucide-react";
+import type { Resource } from "@/lib/data/resources";
 
 const MODULE_COLOR = "oklch(0.60 0.14 80)";
 
@@ -74,6 +79,36 @@ const singleDayIdeas = [
     icon: "🎯",
     title: "Choice board",
     description: "Replace one assignment with 3-4 product options students choose from.",
+  },
+];
+
+const module3Resources: Resource[] = [
+  {
+    title: "Getting Started with PBL",
+    source: "PBLWorks",
+    type: "article",
+    url: "https://www.pblworks.org/blog/getting-started-with-pbl",
+    description: "Practical tips for teachers launching their first project-based learning experience.",
+    moduleSlug: "start-small",
+    stepIndex: 2,
+  },
+  {
+    title: "Micro-PBL: Small Steps to Big Impact",
+    source: "Edutopia",
+    type: "article",
+    url: "https://www.edutopia.org/article/micro-pbl-small-steps-big-impact",
+    description: "How to use micro-projects to build PBL confidence before committing to longer units.",
+    moduleSlug: "start-small",
+    stepIndex: 2,
+  },
+  {
+    title: "PBL Starter Kit",
+    source: "PBLWorks",
+    type: "tool",
+    url: "https://www.pblworks.org/shop/pbl-starter-kit",
+    description: "A curated toolkit with templates, rubrics, and planning guides for your first PBL unit.",
+    moduleSlug: "start-small",
+    stepIndex: 2,
   },
 ];
 
@@ -208,6 +243,11 @@ function Step3({ onNext }: { onNext: () => void }) {
         ))}
       </div>
 
+      <GoDeeper
+        resources={module3Resources}
+        moduleColor={MODULE_COLOR}
+      />
+
       <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
     </div>
   );
@@ -266,8 +306,77 @@ function Step5({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 6 — Completion */
+/* Step 6 — Choose Your PBL Scale (Builder Moment) */
 function Step6({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <div
+          className="text-xs font-semibold uppercase tracking-wider mb-2"
+          style={{ color: MODULE_COLOR }}
+        >
+          Building your plan
+        </div>
+        <ChoiceCards
+          question="What scale feels right for your first PBL experience?"
+          options={[
+            {
+              id: "single-day",
+              title: "Single-Day Challenge",
+              description:
+                "A focused, one-class-period PBL experience. Low risk, high energy.",
+              icon: Zap,
+            },
+            {
+              id: "micro",
+              title: "Micro Project (2-3 days)",
+              description:
+                "A short project that fits within a week. Good for testing the waters.",
+              icon: Clock,
+            },
+            {
+              id: "mini",
+              title: "Mini Unit (1-2 weeks)",
+              description:
+                "A structured project with multiple phases. Real PBL momentum.",
+              icon: Calendar,
+            },
+            {
+              id: "full",
+              title: "Full Unit (3+ weeks)",
+              description:
+                "A sustained, deep-dive PBL unit with all the phases. The full experience.",
+              icon: CalendarRange,
+            },
+          ]}
+          mode="single"
+          onComplete={() => onNext()}
+          moduleColor={MODULE_COLOR}
+        />
+      </motion.div>
+    </div>
+  );
+}
+
+/* Step 7 — End-of-Module Reflection */
+function Step7({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <ReflectionPrompt
+          question="What's one thing you could try in your classroom this week using PBL at any scale?"
+          placeholder="Think about a lesson coming up that could become a mini project..."
+          storageKey="module-3-reflection"
+          onComplete={onNext}
+          moduleColor={MODULE_COLOR}
+        />
+      </motion.div>
+    </div>
+  );
+}
+
+/* Step 8 — Completion */
+function Step8({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
       <motion.div
@@ -318,4 +427,15 @@ function Step6({ onNext }: { onNext: () => void }) {
   );
 }
 
-export const module3Steps = [Step1, Step2, Step3, Step4, Step5, Step6];
+export const module3Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8];
+
+export const module3NarrateTexts: string[] = [
+  "You don't have to redesign your entire year to do PBL. What if you could try it tomorrow, in a single class period? PBL isn't all-or-nothing — you can start with small, low-risk activities and grow from there.",
+  "PBL comes in four scales. Single-day activities take just one class period. Micro-projects run three to five days. Mini-projects span one to two weeks. And full PBL units go three weeks or more. Each scale includes more Gold Standard elements.",
+  "Here are five things you can try tomorrow with zero prep overhaul: replace a test with student teaching, create a Need to Know wall, invite an expert for a quick Zoom, have students write to a real person, or offer a choice board instead of one assignment.",
+  "Micro-projects are a great next step after single-day activities. They run three to five days and give students a real taste of PBL — like creating infographics for younger students or writing persuasive letters to local officials.",
+  "The best way to start with PBL is to begin small and build up. Starting with a single-day activity lets you build confidence and refine your approach before scaling to longer projects.",
+  "Think about which scale feels right for your first PBL experience. There's no wrong answer — what matters is choosing a starting point that feels manageable and exciting for you.",
+  "What's one thing you could try in your classroom this week? It doesn't have to be a full PBL unit — even a small shift toward student-driven learning counts.",
+  "Well done! You now know that PBL comes in four scales, you have five low-prep activities to try, and the key is to start small, build confidence, and scale up over time.",
+];

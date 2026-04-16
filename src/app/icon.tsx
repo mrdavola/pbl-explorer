@@ -22,44 +22,33 @@ export default function Icon() {
           overflow: "hidden",
         }}
       >
-        {/* Subtle radial glow */}
+        {/* Subtle glow */}
         <div
           style={{
             position: "absolute",
-            top: -4,
-            left: -4,
-            width: 24,
-            height: 24,
+            top: -6,
+            left: -6,
+            width: 20,
+            height: 20,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)",
             display: "flex",
           }}
         />
-        {/* Stylized compass/book mark */}
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 22 22"
-          fill="none"
-        >
-          {/* Open book shape */}
-          <path
-            d="M11 5C11 5 8 3 4 3C4 3 3 3 3 4V16C3 17 4 17 4 17C8 17 11 19 11 19C11 19 14 17 18 17C18 17 19 17 19 16V4C19 3 18 3 18 3C14 3 11 5 11 5Z"
-            fill="rgba(255,255,255,0.9)"
-          />
-          {/* Center spine */}
-          <path
-            d="M11 5V19"
-            stroke="#5C1A25"
-            strokeWidth="1.2"
-          />
-          {/* Compass diamond accent */}
-          <path
-            d="M11 7L13 9.5L11 12L9 9.5Z"
-            fill="#8B2E3B"
-          />
-          {/* Compass dot */}
-          <circle cx="11" cy="9.5" r="1" fill="#D4A574" />
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          {/* Compass outer ring */}
+          <circle cx="11" cy="11" r="9" stroke="rgba(255,255,255,0.85)" strokeWidth="1.2" fill="none" />
+          {/* Cardinal tick marks */}
+          <path d="M11 2.5V4.5" stroke="rgba(255,255,255,0.6)" strokeWidth="1" />
+          <path d="M11 17.5V19.5" stroke="rgba(255,255,255,0.6)" strokeWidth="1" />
+          <path d="M2.5 11H4.5" stroke="rgba(255,255,255,0.6)" strokeWidth="1" />
+          <path d="M17.5 11H19.5" stroke="rgba(255,255,255,0.6)" strokeWidth="1" />
+          {/* Compass needle — north (gold) */}
+          <path d="M11 4.5L13 11L11 9.5L9 11Z" fill="#D4A574" />
+          {/* Compass needle — south (white) */}
+          <path d="M11 17.5L9 11L11 12.5L13 11Z" fill="rgba(255,255,255,0.7)" />
+          {/* Center dot */}
+          <circle cx="11" cy="11" r="1.5" fill="#D4A574" />
         </svg>
       </div>
     ),

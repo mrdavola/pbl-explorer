@@ -2,6 +2,11 @@
 
 import { ScenarioQuiz } from "@/components/interactions/scenario-quiz";
 import { DragSort } from "@/components/interactions/drag-sort";
+import { SequenceBuilder } from "@/components/interactions/sequence-builder";
+import { ReflectionPrompt } from "@/components/interactions/reflection-prompt";
+import { PBLPhaseFlow } from "@/components/diagrams/pbl-phase-flow";
+import { GoDeeper } from "@/components/learn/go-deeper";
+import { getResourcesForModule } from "@/lib/data/resources";
 import { ContinueButton } from "@/components/learn/lesson-shell";
 import { motion } from "framer-motion";
 
@@ -109,6 +114,15 @@ function Step2({ onNext }: { onNext: () => void }) {
         </p>
       </motion.div>
 
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.4 }}
+        className="mb-6"
+      >
+        <PBLPhaseFlow activePhase={undefined} />
+      </motion.div>
+
       <div className="flex flex-col gap-3">
         {phases.map((phase, i) => (
           <motion.div
@@ -163,6 +177,15 @@ interface PhaseData {
 function PhaseDeepDive({ phase, onNext }: { phase: PhaseData; onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className="mb-4"
+      >
+        <PBLPhaseFlow activePhase={phase.number - 1} />
+      </motion.div>
+
       {/* Phase header — big and bold */}
       <motion.div {...fadeUp} className="mb-6">
         <div className="flex items-center gap-3 mb-2">
@@ -421,8 +444,58 @@ function Step8({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 9 — Summary Quiz */
+/* Step 9 — Sequence Builder: Order the phases */
 function Step9({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <h2 className="text-xl font-bold mb-1">Order the Phases</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Now that you know all 5 phases, put them in the right order.
+        </p>
+      </motion.div>
+      <SequenceBuilder
+        items={[
+          { id: 'entry', label: 'Entry Event', description: 'Hook students with an engaging launch', correctPosition: 0 },
+          { id: 'investigate', label: 'Investigation', description: 'Research, explore, and gather information', correctPosition: 1 },
+          { id: 'challenge', label: 'Problem / Challenge', description: 'Define the core problem to solve', correctPosition: 2 },
+          { id: 'create', label: 'Create', description: 'Build, prototype, and iterate on solutions', correctPosition: 3 },
+          { id: 'share', label: 'Share / Exhibition', description: 'Present to an authentic audience', correctPosition: 4 },
+        ]}
+        instruction="Put the PBL phases in the right order"
+        onComplete={onNext}
+        moduleColor={MODULE_COLOR}
+      />
+    </div>
+  );
+}
+
+/* Step 10 — Builder: Driving Question */
+function Step10({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: MODULE_COLOR }}>
+          Building your plan
+        </div>
+        <h2 className="text-2xl font-bold mb-4 font-display">Your Driving Question</h2>
+        <p className="text-lg mb-6">
+          A great driving question is open-ended, meaningful to students, and connects to real-world issues. Draft one for your class.
+        </p>
+      </motion.div>
+      <ReflectionPrompt
+        question="What driving question could launch a PBL unit in your classroom?"
+        placeholder="e.g., How can we design a solution to reduce food waste in our school cafeteria?"
+        storageKey="module-2-driving-question"
+        onComplete={onNext}
+        moduleColor={MODULE_COLOR}
+      />
+    </div>
+  );
+}
+
+/* Step 11 — Summary Quiz */
+function Step11({ onNext }: { onNext: () => void }) {
   return (
     <ScenarioQuiz
       question="In the Learning Narrative, which phase comes FIRST?"
@@ -440,8 +513,8 @@ function Step9({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 10 — Completion Summary */
-function Step10({ onNext }: { onNext: () => void }) {
+/* Step 12 — Completion Summary + Go Deeper */
+function Step12({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
       <motion.div
@@ -481,8 +554,22 @@ function Step10({ onNext }: { onNext: () => void }) {
             <span className="text-success mt-0.5">✓</span>
             <span>You can match classroom activities to the correct phase</span>
           </li>
+          <li className="flex items-start gap-2">
+            <span className="text-success mt-0.5">✓</span>
+            <span>You drafted a driving question for your own classroom</span>
+          </li>
         </ul>
       </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="w-full max-w-sm text-left mb-6"
+      >
+        <GoDeeper resources={getResourcesForModule('learning-narrative')} moduleColor={MODULE_COLOR} />
+      </motion.div>
+
       <ContinueButton
         onClick={onNext}
         moduleColor={MODULE_COLOR}
@@ -492,4 +579,19 @@ function Step10({ onNext }: { onNext: () => void }) {
   );
 }
 
-export const module2Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10];
+export const module2Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Step11, Step12];
+
+export const module2NarrateTexts: string[] = [
+  "Great PBL units unfold like a narrative — with a hook, rising action, a climax of creation, and a resolution where students share their work with the world. This story structure is called the Learning Narrative.",
+  "The Learning Narrative has five phases, like chapters in a story: Entry Event, Investigation, Problem or Design Challenge, Create, and Share. Each phase builds on the last to guide students through a meaningful learning journey.",
+  "Phase one is the Entry Event — the hook that sparks curiosity and draws students in. Teachers present something engaging like a mystery or a real-world problem, and students generate authentic questions about what they notice.",
+  "Phase two is Investigation. This is where students dig deep — researching from multiple sources, connecting with experts, and building empathy for the people affected by the problem they're exploring.",
+  "Phase three is the Problem or Design Challenge. Students refine their questions into a focused driving question and create 'Need to Know' lists that map out what they still need to learn.",
+  "Phase four is Create — the heart of the project. Students brainstorm ideas, build quick prototypes, test them, and revise based on feedback. Teachers coach students through the productive struggle of iteration.",
+  "Phase five is Share. Students present their work to a real audience beyond the classroom and reflect on their learning journey. This is where the narrative comes full circle and students see their work making a real difference.",
+  "Now let's see if you can match classroom activities to the correct phase of the Learning Narrative. Each activity belongs in a specific phase based on what students are doing and why.",
+  "Can you put all five phases in the right order? The sequence matters because each phase builds on the one before it, creating a coherent learning experience.",
+  "A great driving question is open-ended, meaningful to students, and connects to real-world issues. Try drafting one for your own classroom — it's the engine that powers the entire PBL unit.",
+  "Quick check: which phase comes first in the Learning Narrative? Remember, every great story starts with a hook that captures the audience's attention.",
+  "Congratulations on completing the Learning Narrative module! You now understand the five-phase story structure, the roles of teachers and students in each phase, and you've drafted your own driving question.",
+];

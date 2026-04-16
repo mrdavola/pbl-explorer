@@ -2,7 +2,12 @@
 
 import { FlipCardGrid } from "@/components/interactions/flip-card";
 import { DragSort } from "@/components/interactions/drag-sort";
+import { MatchingPairs } from "@/components/interactions/matching-pairs";
+import { ChoiceCards } from "@/components/interactions/choice-cards";
 import { ContinueButton } from "@/components/learn/lesson-shell";
+import { GoDeeper } from "@/components/learn/go-deeper";
+import { GoldStandardWheel } from "@/components/diagrams/gold-standard-wheel";
+import { getResourcesForModule } from "@/lib/data/resources";
 import { motion } from "framer-motion";
 
 const MODULE_COLOR = "oklch(0.45 0.15 15)";
@@ -49,10 +54,19 @@ function Step1({ onNext }: { onNext: () => void }) {
         ))}
       </div>
 
-      <motion.p
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
+        className="my-6"
+      >
+        <GoldStandardWheel />
+      </motion.div>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.0 }}
         className="text-sm text-muted-foreground text-center"
       >
         Let&rsquo;s explore each one.
@@ -443,8 +457,88 @@ function Step9({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 10 — Completion */
+/* Step 10 — Matching Pairs: Elements to Descriptions */
 function Step10({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <h2 className="text-xl font-bold mb-1">Match the Elements</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Connect each Gold Standard element to its meaning.
+        </p>
+      </motion.div>
+      <MatchingPairs
+        pairs={[
+          { id: '1', left: 'Challenging Problem', right: 'A meaningful question that drives the project' },
+          { id: '2', left: 'Sustained Inquiry', right: 'Deep investigation over an extended period' },
+          { id: '3', left: 'Authenticity', right: 'Real-world context and genuine impact' },
+          { id: '4', left: 'Student Voice & Choice', right: 'Students make key decisions about their work' },
+          { id: '5', left: 'Reflection', right: 'Regular thinking about what and how they learn' },
+          { id: '6', left: 'Critique & Revision', right: 'Giving and receiving feedback to improve work' },
+          { id: '7', left: 'Public Product', right: 'Sharing work with an audience beyond the classroom' },
+        ]}
+        leftTitle="Element"
+        rightTitle="What It Means"
+        onComplete={onNext}
+        moduleColor={MODULE_COLOR}
+      />
+    </div>
+  );
+}
+
+/* Step 11 — Builder Moment: Choose Your Priority Elements */
+function Step11({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <h2 className="text-xl font-bold mb-1">Builder Moment</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Time to start planning your first PBL unit.
+        </p>
+      </motion.div>
+      <div>
+        <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: MODULE_COLOR }}>
+          Building your plan
+        </div>
+        <ChoiceCards
+          question="Which 3 Gold Standard elements will you prioritize in your first PBL unit?"
+          options={[
+            { id: 'problem', title: 'Challenging Problem/Question', description: 'Start with a meaningful driving question' },
+            { id: 'inquiry', title: 'Sustained Inquiry', description: 'Deep investigation over time' },
+            { id: 'authenticity', title: 'Authenticity', description: 'Real-world connection and impact' },
+            { id: 'voice', title: 'Student Voice & Choice', description: 'Let students make key decisions' },
+            { id: 'reflection', title: 'Reflection', description: 'Regular metacognitive check-ins' },
+            { id: 'critique', title: 'Critique & Revision', description: 'Structured feedback cycles' },
+            { id: 'product', title: 'Public Product', description: 'Share with authentic audience' },
+          ]}
+          mode="multi"
+          maxSelections={3}
+          onComplete={() => onNext()}
+          moduleColor={MODULE_COLOR}
+        />
+      </div>
+    </div>
+  );
+}
+
+/* Step 12 — Go Deeper */
+function Step12({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <h2 className="text-xl font-bold mb-1">Go Deeper</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Explore these resources to deepen your understanding of the Gold Standard.
+        </p>
+      </motion.div>
+      <GoDeeper resources={getResourcesForModule('gold-standard')} moduleColor={MODULE_COLOR} />
+      <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
+    </div>
+  );
+}
+
+/* Step 13 — Completion */
+function Step13({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
       <motion.div
@@ -491,4 +585,20 @@ function Step10({ onNext }: { onNext: () => void }) {
   );
 }
 
-export const module4Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10];
+export const module4Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Step11, Step12, Step13];
+
+export const module4NarrateTexts: string[] = [
+  "Seven elements define high-quality PBL — they're called the Gold Standard. The good news is you don't need all seven to get started. You can begin with just two and layer in more over time.",
+  "The first two elements are the foundation. A Challenging Problem or Question gives students a meaningful driving question. Sustained Inquiry means students investigate over time, not in a single session.",
+  "Elements three and four are about making it real and giving students ownership. Authenticity means real-world context with real audience and real impact. Student Voice and Choice means structured choice within your framework.",
+  "Elements five and six are the growth engine of PBL. Reflection means thinking about learning throughout the process, not just at the end. Critique and Revision means giving and receiving honest feedback, then using it to improve.",
+  "Element seven is what truly separates PBL from everything else: the Public Product. Students create something shared beyond the classroom — with real people, for a real purpose. Presentations just to the class don't count.",
+  "Every great PBL unit starts with a driving question built from a simple formula: How can we, as a certain role, create a product for an audience to achieve a purpose? This formula works across all grade levels.",
+  "See the driving question formula in action. First graders become animal experts creating field guides for families. Eighth graders become journalists producing a multimedia news magazine. The formula scales beautifully.",
+  "Let's check your understanding. Can you match each description to the correct Gold Standard element? The key is understanding what makes each element distinct.",
+  "Here's the most important takeaway: you don't need all seven elements. A driving question plus a public product equals your minimum viable PBL. Start there, then layer in more elements over time.",
+  "Now try connecting each Gold Standard element to its meaning. Understanding these connections will help you recognize and design quality PBL experiences.",
+  "Time to start planning. Which three Gold Standard elements will you prioritize in your first PBL unit? There's no perfect answer — choose the ones that feel most natural for your teaching context.",
+  "Explore these resources to deepen your understanding of the Gold Standard elements. They'll give you practical examples and research to support your PBL planning.",
+  "Gold Standard unlocked! You now know all seven elements, the driving question formula, and that your minimum viable PBL is just a driving question plus a public product.",
+];

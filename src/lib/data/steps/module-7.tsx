@@ -2,7 +2,12 @@
 
 import { ScenarioQuiz } from "@/components/interactions/scenario-quiz";
 import { DragSort } from "@/components/interactions/drag-sort";
+import { ChoiceCards } from "@/components/interactions/choice-cards";
+import { ReflectionPrompt } from "@/components/interactions/reflection-prompt";
 import { ContinueButton } from "@/components/learn/lesson-shell";
+import { GoDeeper } from "@/components/learn/go-deeper";
+import { getResourcesForModule } from "@/lib/data/resources";
+import { Search, MessageSquare, FileText, Lightbulb, Users, ClipboardCheck } from "lucide-react";
 import { motion } from "framer-motion";
 
 const MODULE_COLOR = "oklch(0.50 0.15 310)";
@@ -330,8 +335,70 @@ function Step6({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 7 — Completion */
+/* Step 7 — Builder Moment: AI Integration Points */
 function Step7({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: MODULE_COLOR }}>Building your plan</div>
+        <ChoiceCards
+          question="Where would AI be most helpful in your PBL unit? Select all that apply."
+          options={[
+            { id: 'research', title: 'Student Research', description: 'AI helps students find and synthesize information during investigation', icon: Search },
+            { id: 'feedback', title: 'Draft Feedback', description: 'AI provides initial feedback on student work before peer/teacher review', icon: MessageSquare },
+            { id: 'planning', title: 'Teacher Planning', description: 'AI helps you design project frameworks, rubrics, and scaffolds', icon: FileText },
+            { id: 'ideation', title: 'Brainstorming', description: 'AI helps students generate and explore ideas during the ideation phase', icon: Lightbulb },
+            { id: 'differentiation', title: 'Differentiation', description: 'AI provides personalized scaffolding for different learner needs', icon: Users },
+            { id: 'assessment', title: 'Assessment Support', description: 'AI helps create or analyze formative assessment data', icon: ClipboardCheck },
+          ]}
+          mode="multi"
+          onComplete={() => onNext()}
+          moduleColor={MODULE_COLOR}
+        />
+      </motion.div>
+    </div>
+  );
+}
+
+/* Step 8 — Go Deeper */
+function Step8({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <h2 className="text-2xl font-bold mb-2 font-display">Go Deeper</h2>
+        <p className="text-muted-foreground mb-6">
+          Want to explore more about using AI in PBL? Check out these resources.
+        </p>
+      </motion.div>
+
+      <GoDeeper resources={getResourcesForModule('pbl-and-ai')} moduleColor={MODULE_COLOR} />
+
+      <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
+    </div>
+  );
+}
+
+/* Step 9 — Final Reflection */
+function Step9({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <h2 className="text-2xl font-bold mb-2 font-display">Your PBL Journey Starts Now</h2>
+        <p className="text-lg mb-6 text-muted-foreground">You have completed all 7 modules. Take a moment to reflect on your learning journey.</p>
+      </motion.div>
+      <ReflectionPrompt
+        question="What is the single most important thing you learned across all 7 modules? How will it change your teaching?"
+        placeholder="Think about what surprised you, what confirmed your instincts, and what you want to try first..."
+        storageKey="module-7-final-reflection"
+        onComplete={onNext}
+        moduleColor={MODULE_COLOR}
+      />
+    </div>
+  );
+}
+
+/* Step 10 — Completion */
+function Step10({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
       <motion.div
@@ -389,4 +456,17 @@ function Step7({ onNext }: { onNext: () => void }) {
   );
 }
 
-export const module7Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7];
+export const module7Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10];
+
+export const module7NarrateTexts: string[] = [
+  "AI can help you plan PBL faster, but it can't replace what makes PBL work — you. The best PBL happens when teachers use AI as a thought partner, not a replacement. The magic lives in the human moments.",
+  "The philosophy is simple: Start Human, Use AI, End Human. You choose the direction and framework. AI generates content within your framework. Then you review, edit, and adapt everything to your students. The final call is always yours.",
+  "AI and humans each bring something the other can't. AI is great at generating ideas quickly, creating first drafts, and formatting content. Humans are great at understanding students, building relationships, making judgment calls, and facilitating learning.",
+  "Some PBL tasks belong to humans, some to AI, and some can go either way. Writing the driving question and facilitating peer critique are human tasks. Generating research ideas and drafting rubrics are great for AI. The key is knowing which is which.",
+  "Here are four practical tips. Let AI generate driving question variations, then pick the best. Have AI draft rubrics, then edit for your students. Use AI for day-by-day calendars, then adjust for your schedule. Never let AI replace student voice or community partnerships.",
+  "Facilitating peer critique and building community partnerships should always stay with the human teacher. These require reading the room, managing emotions, building trust, and real human connection that AI can't replicate.",
+  "Think about where AI would be most helpful in your PBL unit. Whether it's student research, draft feedback, teacher planning, brainstorming, differentiation, or assessment support — AI can play different roles at different stages.",
+  "Explore these resources to learn more about using AI effectively in PBL planning. They'll give you practical strategies and examples from teachers who are already combining AI and PBL.",
+  "You've completed all seven modules. Take a moment to reflect on your entire learning journey — what surprised you, what confirmed your instincts, and what you want to try first in your classroom.",
+  "You did it! You now have the complete PBL toolkit. AI is a powerful planning partner, not a replacement. Start Human, Use AI, End Human. Go make something amazing with your students.",
+];

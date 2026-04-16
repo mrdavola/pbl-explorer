@@ -1,14 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Flame, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { ClipboardList, Flame, Library, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { modules } from "@/lib/data/modules";
 import { useProgress } from "@/lib/hooks/use-progress";
+import { usePlanBuilder } from "@/lib/hooks/use-plan-builder";
+import { useSoundEffects } from "@/lib/hooks/use-sound-effects";
 import { LearningPath } from "@/components/path/learning-path";
 import { ProgressRing } from "@/components/learn/progress-ring";
+import { AnimatedIcon } from "@/components/ui/animated-icon";
 
 export default function Home() {
   const { progress, loaded, completedCount } = useProgress();
+  const { hasPlanData, loaded: planLoaded } = usePlanBuilder();
+  const { enabled: soundEnabled, toggleSound } = useSoundEffects();
   const totalModules = modules.length;
   const progressPercent = (completedCount / totalModules) * 100;
 
@@ -33,14 +39,41 @@ export default function Home() {
           <div className="flex items-center gap-3">
             {/* Streak */}
             <div className="flex items-center gap-1 text-sm font-bold" title="Daily streak">
-              <Flame className="w-4 h-4 text-[oklch(0.60_0.14_80)]" />
+              <AnimatedIcon
+                icon={Flame}
+                size={16}
+                animation="flame"
+                color="oklch(0.60 0.14 80)"
+                continuous
+                animateOnView={false}
+              />
               <span className="tabular-nums">{progress.streak}</span>
             </div>
             {/* XP */}
             <div className="flex items-center gap-1 text-sm font-bold" title="Experience points">
-              <Sparkles className="w-4 h-4 text-primary" />
+              <AnimatedIcon
+                icon={Sparkles}
+                size={16}
+                animation="sparkle"
+                color="var(--color-primary)"
+                continuous
+                animateOnView={false}
+              />
               <span className="tabular-nums">{progress.xp}</span>
             </div>
+            {/* Sound toggle */}
+            <button
+              onClick={toggleSound}
+              className="p-1 rounded-md text-muted-foreground hover:text-foreground transition-colors"
+              title={soundEnabled ? "Mute sounds" : "Unmute sounds"}
+              aria-label={soundEnabled ? "Mute sounds" : "Unmute sounds"}
+            >
+              {soundEnabled ? (
+                <Volume2 className="w-4 h-4" />
+              ) : (
+                <VolumeX className="w-4 h-4" />
+              )}
+            </button>
           </div>
         </div>
       </header>
@@ -76,6 +109,25 @@ export default function Home() {
                 ? "You\u2019ve completed all modules. Amazing work!"
                 : `${totalModules - completedCount} module${totalModules - completedCount === 1 ? "" : "s"} remaining`}
           </p>
+
+          <div className="flex items-center gap-3 mt-4">
+            {planLoaded && hasPlanData && (
+              <Link
+                href="/my-plan"
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+              >
+                <ClipboardList className="w-4 h-4" />
+                My Plan
+              </Link>
+            )}
+            <Link
+              href="/toolkit"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+            >
+              <Library className="w-4 h-4" />
+              Toolkit
+            </Link>
+          </div>
         </motion.div>
 
         {/* Learning path */}

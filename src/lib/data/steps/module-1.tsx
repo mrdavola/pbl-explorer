@@ -3,7 +3,11 @@
 import { ScenarioQuiz } from "@/components/interactions/scenario-quiz";
 import { FlipCardGrid } from "@/components/interactions/flip-card";
 import { DragSort } from "@/components/interactions/drag-sort";
+import { SliderSpectrum } from "@/components/interactions/slider-spectrum";
+import { ReflectionPrompt } from "@/components/interactions/reflection-prompt";
 import { ContinueButton } from "@/components/learn/lesson-shell";
+import { GoDeeper } from "@/components/learn/go-deeper";
+import { getResourcesForModule } from "@/lib/data/resources";
 import { motion } from "framer-motion";
 
 const MODULE_COLOR = "oklch(0.55 0.14 25)";
@@ -174,8 +178,28 @@ function Step5({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 6 — Real Example Before/After */
+/* Step 6 — Slider Spectrum: Rate the PBL-ness */
 function Step6({ onNext }: { onNext: () => void }) {
+  return (
+    <SliderSpectrum
+      question="Where would you place this scenario on the PBL spectrum?"
+      leftLabel="Traditional"
+      rightLabel="Full PBL"
+      snapPoints={[
+        { value: 0, label: 'Teacher-Led Lecture', feedback: 'Fully teacher-directed with no student choice -- this is traditional instruction.' },
+        { value: 25, label: 'Guided Activity', feedback: 'Some student activity, but the teacher controls the process and outcome.' },
+        { value: 50, label: 'Structured Project', feedback: 'Students create something, but within tight parameters -- getting closer!' },
+        { value: 75, label: 'Student-Driven Project', feedback: 'Students have voice and choice with real-world connections -- this is PBL territory.' },
+        { value: 100, label: 'Full PBL', feedback: 'Student-driven inquiry with authentic audience, sustained investigation, and public product.' },
+      ]}
+      onComplete={onNext}
+      moduleColor={MODULE_COLOR}
+    />
+  );
+}
+
+/* Step 7 — Real Example Before/After */
+function Step7({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
@@ -221,18 +245,20 @@ function Step6({ onNext }: { onNext: () => void }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="text-sm text-muted-foreground text-center"
+        className="text-sm text-muted-foreground text-center mb-6"
       >
         Same content. Completely different experience.
       </motion.p>
+
+      <GoDeeper resources={getResourcesForModule('what-is-pbl')} moduleColor={MODULE_COLOR} />
 
       <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
     </div>
   );
 }
 
-/* Step 7 — Knowledge Check (Drag Sort) */
-function Step7({ onNext }: { onNext: () => void }) {
+/* Step 8 — Knowledge Check (Drag Sort) */
+function Step8({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
@@ -287,8 +313,31 @@ function Step7({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 8 — Completion summary (handled by parent as celebration) */
-function Step8({ onNext }: { onNext: () => void }) {
+/* Step 9 — Builder Moment: Plan Your First PBL */
+function Step9({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <div
+          className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-md mb-4 inline-block"
+          style={{ borderLeft: `3px solid ${MODULE_COLOR}`, backgroundColor: 'oklch(0.95 0.01 25)' }}
+        >
+          Building your plan
+        </div>
+      </motion.div>
+      <ReflectionPrompt
+        question="What subject or class would you try PBL in first? Include your grade level."
+        placeholder="e.g., 7th Grade Science, 3rd Grade ELA, High School History..."
+        storageKey="module-1-plan"
+        onComplete={onNext}
+        moduleColor={MODULE_COLOR}
+      />
+    </div>
+  );
+}
+
+/* Step 10 — Completion summary (handled by parent as celebration) */
+function Step10({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
       <motion.div
@@ -335,4 +384,17 @@ function Step8({ onNext }: { onNext: () => void }) {
   );
 }
 
-export const module1Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8];
+export const module1Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10];
+
+export const module1NarrateTexts: string[] = [
+  "A poster project after a unit might feel like PBL, but it's actually just 'doing a project.' In true PBL, the project IS the unit — students learn through the project, not before it.",
+  "Think of it like a meal. 'Doing a project' is dessert — a fun add-on after the real teaching is done. Project-Based Learning is the main course — the project drives the entire learning experience from day one.",
+  "In traditional projects, the work comes after the unit is taught and the teacher assigns the topic. In PBL, the project IS the unit, and students have voice and choice in what they explore.",
+  "PBL projects result in a public product shared beyond the classroom, not just a poster for the teacher. And assessment happens throughout the process, not only at the end.",
+  "In PBL, content is learned as needed to solve the problem, rather than being taught first and then applied. And the audience extends beyond the classroom to real people in the community.",
+  "PBL exists on a spectrum. At one end is fully teacher-led instruction; at the other is student-driven inquiry with authentic audiences, sustained investigation, and a public product.",
+  "Here's the difference in action. A traditional approach teaches fractions for three weeks and then assigns a poster. A PBL approach has students run a class bakery where they learn fractions by halving recipes, pricing items, and making change.",
+  "Now it's time to test your understanding. Can you tell the difference between 'doing a project' and true Project-Based Learning? The key question is: does the project come after the learning, or is the project how students learn?",
+  "Think about where you'd try PBL first. Choosing a specific subject and grade level helps make PBL feel concrete and actionable rather than abstract.",
+  "Congratulations on completing Module 1! You now know the difference between doing a project and PBL, that the project IS the unit, and that PBL features student voice, public products, and real audiences.",
+];

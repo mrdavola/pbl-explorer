@@ -3,11 +3,14 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { type LucideIcon } from "lucide-react";
+import { AnimatedIcon } from "@/components/ui/animated-icon";
+import { useSoundEffects } from "@/lib/hooks/use-sound-effects";
 
 interface CelebrationProps {
   moduleTitle: string;
   moduleColor: string;
-  moduleIcon: string;
+  moduleIcon: LucideIcon;
   xpEarned?: number;
   nextModuleSlug?: string;
   nextModuleTitle?: string;
@@ -77,29 +80,32 @@ function Confetti() {
 export function Celebration({
   moduleTitle,
   moduleColor,
-  moduleIcon,
+  moduleIcon: ModuleIcon,
   xpEarned = 50,
   nextModuleSlug,
   nextModuleTitle,
 }: CelebrationProps) {
+  const { play } = useSoundEffects();
+
+  useEffect(() => {
+    play('celebration');
+  }, [play]);
+
   return (
     <>
       <Confetti />
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 text-center min-h-[100dvh]">
         {/* Big icon */}
-        <motion.div
-          initial={{ scale: 0, rotate: -30 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{
-            type: "spring",
-            stiffness: 200,
-            damping: 15,
-            delay: 0.2,
-          }}
-          className="text-7xl mb-6"
-        >
-          {moduleIcon}
-        </motion.div>
+        <div className="mb-6">
+          <AnimatedIcon
+            icon={ModuleIcon}
+            size={72}
+            animation="trophy"
+            delay={0.2}
+            continuous
+            animateOnView={false}
+          />
+        </div>
 
         {/* Title */}
         <motion.h1

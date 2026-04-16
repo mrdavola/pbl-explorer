@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSoundEffects } from "@/lib/hooks/use-sound-effects";
 
 interface DragSortItem {
   id: string;
@@ -29,6 +30,7 @@ export function DragSort({
   const [feedback, setFeedback] = useState<Record<string, "correct" | "wrong">>({});
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [wrongMessage, setWrongMessage] = useState<string | null>(null);
+  const { play } = useSoundEffects();
   const allPlaced = Object.keys(placed).length === initialItems.length;
   const allCorrect = allPlaced && Object.values(feedback).every((f) => f === "correct");
 
@@ -40,6 +42,7 @@ export function DragSort({
       if (!item) return;
 
       const isCorrect = item.correctZone === zoneId;
+      play(isCorrect ? 'correct' : 'incorrect');
       setPlaced((prev) => ({ ...prev, [itemId]: zoneId }));
       setFeedback((prev) => ({
         ...prev,
@@ -69,7 +72,7 @@ export function DragSort({
         }, 2400);
       }
     },
-    [initialItems, zones]
+    [initialItems, zones, play]
   );
 
   const handleReset = useCallback(() => {

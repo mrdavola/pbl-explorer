@@ -84,6 +84,8 @@
 }
 
 :root {
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+
   /* Maroon-tinted color system */
   --background: oklch(0.97 0.003 15);
   --foreground: oklch(0.20 0.01 15);

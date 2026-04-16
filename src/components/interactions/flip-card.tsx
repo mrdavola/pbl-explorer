@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useSoundEffects } from "@/lib/hooks/use-sound-effects";
 
 interface FlipCardProps {
   front: React.ReactNode;
@@ -22,10 +23,12 @@ export function FlipCard({
   onFlip,
 }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false);
+  const { play } = useSoundEffects();
 
   function handleFlip() {
     if (!flipped) {
       setFlipped(true);
+      play('click');
       onFlip?.();
     }
   }

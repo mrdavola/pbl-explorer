@@ -1,3 +1,6 @@
+import { Lightbulb, BookOpen, Sprout, Star, Palette, Languages, BrainCircuit } from 'lucide-react';
+import { type LucideIcon } from 'lucide-react';
+
 export interface ModuleData {
   id: number;
   slug: string;
@@ -7,7 +10,7 @@ export interface ModuleData {
   stepCount: number;
   color: string;
   colorLight: string;
-  icon: string;
+  icon: LucideIcon;
 }
 
 export const modules: ModuleData[] = [
@@ -17,10 +20,10 @@ export const modules: ModuleData[] = [
     title: "What IS PBL?",
     subtitle: "Dessert vs. Main Course",
     duration: "~5 min",
-    stepCount: 8,
+    stepCount: 10,
     color: "var(--color-module-1)",
     colorLight: "var(--color-module-1-light)",
-    icon: "💡",
+    icon: Lightbulb,
   },
   {
     id: 2,
@@ -28,65 +31,65 @@ export const modules: ModuleData[] = [
     title: "The Learning Narrative",
     subtitle: "The 5-Phase Story",
     duration: "~7 min",
-    stepCount: 10,
+    stepCount: 12,
     color: "var(--color-module-2)",
     colorLight: "var(--color-module-2-light)",
-    icon: "📖",
+    icon: BookOpen,
   },
   {
     id: 3,
     slug: "start-small",
     title: "Start Small",
     subtitle: "Try It Tomorrow",
-    duration: "~3 min",
-    stepCount: 6,
+    duration: "~5 min",
+    stepCount: 8,
     color: "var(--color-module-3)",
     colorLight: "var(--color-module-3-light)",
-    icon: "🌱",
+    icon: Sprout,
   },
   {
     id: 4,
     slug: "gold-standard",
     title: "The Gold Standard",
     subtitle: "7 Elements of Quality PBL",
-    duration: "~7 min",
-    stepCount: 10,
+    duration: "~10 min",
+    stepCount: 13,
     color: "var(--color-module-4)",
     colorLight: "var(--color-module-4-light)",
-    icon: "⭐",
+    icon: Star,
   },
   {
     id: 5,
     slug: "design-thinking",
     title: "Design Thinking 101",
     subtitle: "The Creative Engine",
-    duration: "~7 min",
-    stepCount: 10,
+    duration: "~10 min",
+    stepCount: 14,
     color: "var(--color-module-5)",
     colorLight: "var(--color-module-5-light)",
-    icon: "🎨",
+    icon: Palette,
   },
   {
     id: 6,
     slug: "alphabet-soup",
     title: "The Alphabet Soup",
     subtitle: "PBL vs. Everything Else",
-    duration: "~5 min",
-    stepCount: 7,
+    duration: "~8 min",
+    stepCount: 11,
     color: "var(--color-module-6)",
     colorLight: "var(--color-module-6-light)",
-    icon: "🔤",
+    icon: Languages,
   },
   {
     id: 7,
     slug: "pbl-and-ai",
     title: "PBL + AI",
     subtitle: "Start Human, End Human",
-    duration: "~5 min",
-    stepCount: 7,
+    duration: "~7 min",
+    stepCount: 10,
     color: "var(--color-module-7)",
     colorLight: "var(--color-module-7-light)",
-    icon: "🤖",
+    icon: BrainCircuit,
   },
 ];
 

@@ -5,6 +5,18 @@ import Link from "next/link";
 import { Check, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ModuleData } from "@/lib/data/modules";
+import { AnimatedIcon, type AnimationPreset } from "@/components/ui/animated-icon";
+
+/** Each module gets a distinct animation style */
+const moduleAnimations: AnimationPreset[] = [
+  "pop",     // Module 1: What IS PBL? — lightbulb pops in
+  "rise",    // Module 2: Learning Narrative — book rises
+  "bounce",  // Module 3: Start Small — sprout bounces up
+  "sparkle", // Module 4: Gold Standard — star sparkles
+  "pop",     // Module 5: Design Thinking — palette pops
+  "rise",    // Module 6: Alphabet Soup — languages rise
+  "bounce",  // Module 7: PBL + AI — brain bounces
+];
 
 interface LearningPathProps {
   modules: ModuleData[];
@@ -70,6 +82,7 @@ function ModuleNode({
   isCurrent: boolean;
   isLocked: boolean;
 }) {
+  const animationPreset = moduleAnimations[index] ?? "bounce";
   // Alternate left/right with a subtle zigzag
   const offsetX = index % 2 === 0 ? -24 : 24;
 
@@ -109,7 +122,13 @@ function ModuleNode({
             <Check className="w-4 h-4" strokeWidth={3} />
           </div>
         ) : (
-          <span>{mod.icon}</span>
+          <AnimatedIcon
+            icon={mod.icon}
+            size={24}
+            animation={animationPreset}
+            delay={index * 0.08}
+            animateOnView
+          />
         )}
       </div>
 

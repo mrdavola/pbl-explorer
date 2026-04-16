@@ -23,7 +23,7 @@ export default function AppleIcon() {
           overflow: "hidden",
         }}
       >
-        {/* Top-left radial highlight for depth */}
+        {/* Top-left highlight */}
         <div
           style={{
             position: "absolute",
@@ -32,12 +32,12 @@ export default function AppleIcon() {
             width: 120,
             height: 120,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)",
             display: "flex",
           }}
         />
 
-        {/* Bottom ambient glow */}
+        {/* Bottom-right warm glow */}
         <div
           style={{
             position: "absolute",
@@ -46,73 +46,55 @@ export default function AppleIcon() {
             width: 100,
             height: 100,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(212,165,116,0.15) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(212,165,116,0.12) 0%, transparent 70%)",
             display: "flex",
           }}
         />
 
-        {/* Main icon — open book with compass */}
-        <svg
-          width="100"
-          height="100"
-          viewBox="0 0 100 100"
-          fill="none"
-        >
-          {/* Book shadow */}
-          <path
-            d="M50 28C50 28 38 18 18 18C18 18 12 18 12 24V76C12 82 18 82 18 82C38 82 50 92 50 92C50 92 62 82 82 82C82 82 88 82 88 76V24C88 18 82 18 82 18C62 18 50 28 50 28Z"
-            fill="rgba(0,0,0,0.15)"
-            transform="translate(1, 2)"
-          />
-          {/* Book body */}
-          <path
-            d="M50 28C50 28 38 18 18 18C18 18 12 18 12 24V76C12 82 18 82 18 82C38 82 50 92 50 92C50 92 62 82 82 82C82 82 88 82 88 76V24C88 18 82 18 82 18C62 18 50 28 50 28Z"
-            fill="rgba(255,255,255,0.92)"
-          />
-          {/* Left page lines */}
-          <path d="M22 34H42" stroke="rgba(107,38,49,0.2)" strokeWidth="2" strokeLinecap="round" />
-          <path d="M22 42H40" stroke="rgba(107,38,49,0.15)" strokeWidth="2" strokeLinecap="round" />
-          <path d="M22 50H38" stroke="rgba(107,38,49,0.1)" strokeWidth="2" strokeLinecap="round" />
-          {/* Right page lines */}
-          <path d="M58 34H78" stroke="rgba(107,38,49,0.2)" strokeWidth="2" strokeLinecap="round" />
-          <path d="M60 42H78" stroke="rgba(107,38,49,0.15)" strokeWidth="2" strokeLinecap="round" />
-          <path d="M62 50H78" stroke="rgba(107,38,49,0.1)" strokeWidth="2" strokeLinecap="round" />
-          {/* Center spine */}
-          <path
-            d="M50 28V92"
-            stroke="rgba(107,38,49,0.3)"
-            strokeWidth="2"
-          />
-          {/* Compass rose */}
-          <path
-            d="M50 38L56 52L50 66L44 52Z"
-            fill="#6B2631"
-            opacity="0.9"
-          />
-          <path
-            d="M50 38L56 52L50 52Z"
-            fill="#8B3A48"
-          />
-          <path
-            d="M50 52L50 66L44 52Z"
-            fill="#4A1520"
-          />
-          {/* Compass center */}
-          <circle cx="50" cy="52" r="4" fill="#D4A574" />
-          <circle cx="50" cy="52" r="2" fill="#6B2631" />
-          {/* North indicator */}
-          <circle cx="50" cy="40" r="1.5" fill="#D4A574" />
+        {/* Compass icon */}
+        <svg width="110" height="110" viewBox="0 0 110 110" fill="none">
+          {/* Outer ring */}
+          <circle cx="55" cy="55" r="48" stroke="rgba(255,255,255,0.8)" strokeWidth="2.5" fill="none" />
+          {/* Inner ring */}
+          <circle cx="55" cy="55" r="42" stroke="rgba(255,255,255,0.2)" strokeWidth="1" fill="none" />
+
+          {/* Cardinal tick marks */}
+          <path d="M55 7V18" stroke="rgba(255,255,255,0.7)" strokeWidth="2" strokeLinecap="round" />
+          <path d="M55 92V103" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" />
+          <path d="M7 55H18" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" />
+          <path d="M92 55H103" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" />
+
+          {/* Intercardinal ticks */}
+          <path d="M21.5 21.5L28 28" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M88.5 21.5L82 28" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M21.5 88.5L28 82" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M88.5 88.5L82 82" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round" />
+
+          {/* Compass needle — NE quadrant (gold) */}
+          <path d="M55 20L70 55L55 47Z" fill="#D4A574" />
+          {/* Compass needle — SW quadrant (gold darker) */}
+          <path d="M55 90L40 55L55 63Z" fill="#B8895A" />
+          {/* Compass needle — NW quadrant (white) */}
+          <path d="M55 20L40 55L55 47Z" fill="rgba(255,255,255,0.85)" />
+          {/* Compass needle — SE quadrant (white dimmer) */}
+          <path d="M55 90L70 55L55 63Z" fill="rgba(255,255,255,0.5)" />
+
+          {/* Center ring */}
+          <circle cx="55" cy="55" r="6" fill="#D4A574" />
+          <circle cx="55" cy="55" r="3.5" fill="#6B2631" />
+          <circle cx="55" cy="55" r="1.5" fill="#D4A574" />
+
         </svg>
 
-        {/* App name below icon */}
+        {/* App name */}
         <div
           style={{
             display: "flex",
-            marginTop: -4,
-            fontSize: 14,
+            marginTop: -6,
+            fontSize: 13,
             fontWeight: 700,
-            color: "rgba(255,255,255,0.9)",
-            letterSpacing: 3,
+            color: "rgba(255,255,255,0.85)",
+            letterSpacing: 4,
             textTransform: "uppercase" as const,
           }}
         >

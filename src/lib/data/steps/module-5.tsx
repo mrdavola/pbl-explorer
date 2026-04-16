@@ -2,6 +2,12 @@
 
 import { FlipCardGrid } from "@/components/interactions/flip-card";
 import { ContinueButton } from "@/components/learn/lesson-shell";
+import { DesignThinkingLoop } from "@/components/diagrams/design-thinking-loop";
+import { SequenceBuilder } from "@/components/interactions/sequence-builder";
+import { ReflectionPrompt } from "@/components/interactions/reflection-prompt";
+import { ChoiceCards } from "@/components/interactions/choice-cards";
+import { GoDeeper } from "@/components/learn/go-deeper";
+import { getResourcesForModule } from "@/lib/data/resources";
 import { motion } from "framer-motion";
 
 const MODULE_COLOR = "oklch(0.60 0.12 60)";
@@ -114,10 +120,19 @@ function Step2({ onNext }: { onNext: () => void }) {
         ))}
       </div>
 
-      <motion.p
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7 }}
+        className="mb-4"
+      >
+        <DesignThinkingLoop />
+      </motion.div>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.9 }}
         className="text-xs text-muted-foreground text-center"
       >
         It&rsquo;s not always linear &mdash; teams often loop back between stages.
@@ -176,6 +191,15 @@ function Step3({ onNext }: { onNext: () => void }) {
         </p>
       </motion.div>
 
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="mt-4"
+      >
+        <DesignThinkingLoop activeStage={0} />
+      </motion.div>
+
       <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
     </div>
   );
@@ -232,6 +256,15 @@ function Step4({ onNext }: { onNext: () => void }) {
         </p>
       </motion.div>
 
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="mt-4"
+      >
+        <DesignThinkingLoop activeStage={1} />
+      </motion.div>
+
       <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
     </div>
   );
@@ -286,6 +319,15 @@ function Step5({ onNext }: { onNext: () => void }) {
         <p className="text-xs text-muted-foreground">
           <strong>Mindset:</strong> Creative confidence &mdash; everyone is creative when given the right conditions.
         </p>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="mt-4"
+      >
+        <DesignThinkingLoop activeStage={2} />
       </motion.div>
 
       <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
@@ -350,6 +392,15 @@ function Step6({ onNext }: { onNext: () => void }) {
         </p>
       </motion.div>
 
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="mt-4"
+      >
+        <DesignThinkingLoop activeStage={3} />
+      </motion.div>
+
       <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
     </div>
   );
@@ -401,6 +452,15 @@ function Step7({ onNext }: { onNext: () => void }) {
         <p className="text-xs text-muted-foreground">
           <strong>Mindset:</strong> Fail forward &mdash; every &ldquo;failure&rdquo; is data that makes the next version better.
         </p>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="mt-4"
+      >
+        <DesignThinkingLoop activeStage={4} />
       </motion.div>
 
       <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
@@ -492,8 +552,104 @@ function Step9({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 10 — Completion */
+/* Step 10 — Sequence Builder: Order the DT stages */
 function Step10({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <h2 className="text-xl font-bold mb-2">Check Your Understanding</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Can you put the Design Thinking stages in the right order?
+        </p>
+      </motion.div>
+
+      <SequenceBuilder
+        items={[
+          { id: 'empathize', label: 'Empathize', description: 'Understand the people you are designing for', correctPosition: 0 },
+          { id: 'define', label: 'Define', description: 'Frame the right problem to solve', correctPosition: 1 },
+          { id: 'ideate', label: 'Ideate', description: 'Generate a range of possible solutions', correctPosition: 2 },
+          { id: 'prototype', label: 'Prototype', description: 'Build quick, rough versions to test', correctPosition: 3 },
+          { id: 'test', label: 'Test', description: 'Try it with real users and learn', correctPosition: 4 },
+        ]}
+        instruction="Arrange the Design Thinking stages in order"
+        onComplete={onNext}
+        moduleColor={MODULE_COLOR}
+      />
+    </div>
+  );
+}
+
+/* Step 11 — Builder: Problem Statement */
+function Step11({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: MODULE_COLOR }}>Building your plan</div>
+        <h2 className="text-xl font-bold mb-2">Your Design Challenge</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Think about a real-world problem your students could tackle using Design Thinking.
+        </p>
+      </motion.div>
+
+      <ReflectionPrompt
+        question="What real-world problem could your students tackle using Design Thinking?"
+        placeholder="e.g., How might we make our school playground more inclusive for students with disabilities?"
+        storageKey="module-5-problem"
+        onComplete={onNext}
+        moduleColor={MODULE_COLOR}
+      />
+    </div>
+  );
+}
+
+/* Step 12 — Builder: DT Entry Point Choice */
+function Step12({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: MODULE_COLOR }}>Building your plan</div>
+        <h2 className="text-xl font-bold mb-2">Starting Point</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          How would you kick off the empathy stage with your students?
+        </p>
+      </motion.div>
+
+      <ChoiceCards
+        question="Where would you start the Design Thinking process with your students?"
+        options={[
+          { id: 'empathy-interviews', title: 'Empathy Interviews', description: 'Students interview real stakeholders to understand the problem deeply' },
+          { id: 'observation', title: 'Field Observation', description: 'Students observe the problem in its natural context' },
+          { id: 'research', title: 'Background Research', description: 'Students research existing solutions and data about the problem' },
+          { id: 'personal-experience', title: 'Personal Experience', description: 'Students reflect on their own experiences with the problem' },
+        ]}
+        mode="single"
+        onComplete={() => onNext()}
+        moduleColor={MODULE_COLOR}
+      />
+    </div>
+  );
+}
+
+/* Step 13 — Go Deeper Resources */
+function Step13({ onNext }: { onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      <motion.div {...fadeUp}>
+        <h2 className="text-xl font-bold mb-2">Go Deeper</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          Explore these resources to deepen your understanding of Design Thinking.
+        </p>
+      </motion.div>
+
+      <GoDeeper resources={getResourcesForModule('design-thinking')} moduleColor={MODULE_COLOR} />
+
+      <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
+    </div>
+  );
+}
+
+/* Step 14 — Completion */
+function Step14({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
       <motion.div
@@ -578,4 +734,21 @@ function Step10({ onNext }: { onNext: () => void }) {
   );
 }
 
-export const module5Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10];
+export const module5Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Step11, Step12, Step13, Step14];
+
+export const module5NarrateTexts: string[] = [
+  "When GE redesigned MRI rooms as pirate ships and jungle adventures, sedation rates for children dropped dramatically. Kids actually asked to come back. The process they used is Design Thinking — and it's the same process you're about to learn.",
+  "Design Thinking has five stages: Empathize, Define, Ideate, Prototype, and Test. It's a human-centered process, and it's not always linear — teams often loop back between stages as they learn more.",
+  "The Empathize stage is about understanding the people you're designing for. Teachers set up real encounters like interviews and observations so students can see the problem through someone else's eyes. The mindset here is human-centered — user needs come first.",
+  "The Define stage is about synthesizing what you learned into a clear problem statement. The 'How Might We' format works well — it's specific enough to act on but broad enough for creative solutions. Resist jumping to solutions too soon.",
+  "The Ideate stage is about generating many ideas — quantity over quality. Techniques like Crazy Eights help students produce eight ideas in eight minutes. The rules are simple: defer judgment, go for volume, build on others' ideas, and be visual.",
+  "The Prototype stage is about building quick, low-fidelity versions. Paper mock-ups, cardboard models, and role-play all work. The key is making ideas tangible fast — if students spend too long perfecting a model, they won't want to change it after feedback.",
+  "The Test stage puts prototypes in front of real users. Students present their work, watch reactions, ask questions, and listen. Based on feedback, they iterate — going back to Prototype or even Ideate. Every failure is data that makes the next version better.",
+  "Design Thinking maps naturally to the PBL Learning Narrative. Empathize connects to the Investigation phase, Define connects to Problem Framing, and Ideate plus Prototype plus Test connect to the Create and Iterate phase.",
+  "Behind the five stages are four key mindsets: human-centered, creative confidence, a culture of prototyping, and failing forward. These mindsets create the conditions where Design Thinking thrives in a classroom.",
+  "Can you put the Design Thinking stages in the right order? The sequence matters because each stage builds on what comes before — you can't define a problem you haven't empathized with.",
+  "Think about a real-world problem your students could tackle using Design Thinking. The best challenges are ones that affect people your students know and care about.",
+  "How would you kick off the empathy stage? Whether through interviews, field observation, background research, or personal experience, the goal is always the same — deeply understanding the people you're designing for.",
+  "Explore these resources to deepen your understanding of Design Thinking and how it connects to PBL. They offer practical tools and classroom examples.",
+  "Design Thinking unlocked! You now know the five stages, how they map to PBL, and the four mindsets that make it work. PBL gives you the why and what — Design Thinking gives you the how.",
+];

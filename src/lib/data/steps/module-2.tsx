@@ -56,7 +56,7 @@ function Step1({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2">A Quick Question</h2>
+        <h2 className="text-3xl font-bold mb-2">A Quick Question</h2>
         <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
           What do a great novel and a great PBL unit have in common?
         </p>
@@ -69,9 +69,8 @@ function Step1({ onNext }: { onNext: () => void }) {
         className="rounded-2xl border-2 p-6 text-white text-center"
         style={{ backgroundColor: MODULE_COLOR, borderColor: MODULE_COLOR }}
       >
-        <div className="text-4xl mb-4">📖</div>
-        <h3 className="text-xl font-bold mb-2 text-white">They both follow a story structure.</h3>
-        <p className="text-sm text-white/90 leading-relaxed">
+        <h3 className="text-2xl font-bold mb-2 text-white">They both follow a story structure.</h3>
+        <p className="text-base text-white/90 leading-relaxed">
           Great PBL units unfold like a narrative &mdash; with a hook, rising action, a
           climax of creation, and a resolution where students share their work
           with the world.
@@ -93,7 +92,7 @@ function Step1({ onNext }: { onNext: () => void }) {
             transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
           />
         </div>
-        <p className="text-xs text-muted-foreground text-center mt-2">
+        <p className="text-sm text-muted-foreground text-center mt-2">
           The Learning Narrative &mdash; a 5-phase story arc for PBL
         </p>
       </motion.div>
@@ -108,8 +107,8 @@ function Step2({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-1">The Learning Narrative</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-3xl font-bold mb-1">The Learning Narrative</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Every great PBL unit follows these 5 phases &mdash; like chapters in a story.
         </p>
       </motion.div>
@@ -146,10 +145,10 @@ function Step2({ onNext }: { onNext: () => void }) {
             </div>
             {/* Content */}
             <div className="pt-1.5">
-              <p className="font-semibold text-sm" style={{ color: phase.color }}>
+              <p className="font-semibold text-base" style={{ color: phase.color }}>
                 {phase.name}
               </p>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {phase.description}
               </p>
             </div>
@@ -196,8 +195,8 @@ function PhaseDeepDive({ phase, onNext }: { phase: PhaseData; onNext: () => void
             {phase.number}
           </span>
           <div>
-            <h2 className="text-2xl font-bold leading-tight">{phase.name}</h2>
-            <p className="text-sm text-muted-foreground">{phase.description}</p>
+            <h2 className="text-3xl font-bold leading-tight">{phase.name}</h2>
+            <p className="text-base text-muted-foreground">{phase.description}</p>
           </div>
         </div>
       </motion.div>
@@ -214,7 +213,7 @@ function PhaseDeepDive({ phase, onNext }: { phase: PhaseData; onNext: () => void
         </p>
         <ul className="space-y-2.5">
           {phase.teacherActions.map((action, i) => (
-            <li key={i} className="flex items-start gap-2.5 text-sm leading-relaxed">
+            <li key={i} className="flex items-start gap-2.5 text-base leading-relaxed">
               <span className="mt-1 w-1.5 h-1.5 rounded-full shrink-0 bg-muted-foreground/40" />
               {action}
             </li>
@@ -235,7 +234,7 @@ function PhaseDeepDive({ phase, onNext }: { phase: PhaseData; onNext: () => void
         </p>
         <ul className="space-y-2.5">
           {phase.studentActions.map((action, i) => (
-            <li key={i} className="flex items-start gap-2.5 text-sm leading-relaxed text-white/90">
+            <li key={i} className="flex items-start gap-2.5 text-base leading-relaxed text-white/90">
               <span className="mt-1 w-1.5 h-1.5 rounded-full shrink-0 bg-white/50" />
               {action}
             </li>
@@ -253,7 +252,7 @@ function PhaseDeepDive({ phase, onNext }: { phase: PhaseData; onNext: () => void
         <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5">
           {phase.exampleLabel}
         </p>
-        <p className="text-sm leading-relaxed italic text-muted-foreground">
+        <p className="text-base leading-relaxed italic text-muted-foreground">
           &ldquo;{phase.example}&rdquo;
         </p>
       </motion.div>
@@ -289,7 +288,7 @@ const phaseDetails: PhaseData[] = [
     description: "Research, skill-building, and developing empathy for the people involved.",
     teacherActions: [
       "Guide students through structured research from multiple sources",
-      "Connect students with real experts, community members, or primary sources",
+      "Bring in outside voices \u2014 a parent, a local worker, even a YouTube interview counts",
       "Facilitate empathy-building exercises like interviews or perspective-taking",
     ],
     studentActions: [
@@ -308,7 +307,7 @@ const phaseDetails: PhaseData[] = [
     teacherActions: [
       "Help students refine their raw questions into a focused driving question",
       "Facilitate the creation of \u201cNeed to Know\u201d lists that map out learning gaps",
-      "Connect students with subject-matter experts who can add depth",
+      "Find a knowledgeable voice to add depth \u2014 a colleague, a parent volunteer, or an online resource",
     ],
     studentActions: [
       "Take ownership of the driving question — make it feel like theirs",
@@ -342,7 +341,7 @@ const phaseDetails: PhaseData[] = [
     color: "#7C3AED",
     description: "Present to an authentic audience and reflect on the learning journey.",
     teacherActions: [
-      "Arrange a real audience beyond the classroom — parents, experts, community members",
+      "Arrange a real audience \u2014 even another class, parents on video call, or a hallway display counts",
       "Facilitate structured reflection on both the product and the process",
       "Create space to celebrate effort, growth, and collaboration — not just outcomes",
     ],
@@ -386,8 +385,8 @@ function Step8({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">Match the Activity</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">Match the Activity</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Place each classroom activity into the correct phase of the Learning Narrative.
         </p>
       </motion.div>
@@ -449,8 +448,8 @@ function Step9({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">Order the Phases</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">Order the Phases</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Now that you know all 5 phases, put them in the right order.
         </p>
       </motion.div>
@@ -478,7 +477,7 @@ function Step10({ onNext }: { onNext: () => void }) {
         <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: MODULE_COLOR }}>
           Building your plan
         </div>
-        <h2 className="text-2xl font-bold mb-4 font-display">Your Driving Question</h2>
+        <h2 className="text-3xl font-bold mb-4 font-display">Your Driving Question</h2>
         <p className="text-lg mb-6">
           A great driving question is open-ended, meaningful to students, and connects to real-world issues. Draft one for your class.
         </p>
@@ -517,17 +516,9 @@ function Step11({ onNext }: { onNext: () => void }) {
 function Step12({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        className="text-6xl mb-6"
-      >
-        🎉
-      </motion.div>
       <motion.h2
         {...fadeUp}
-        className="text-2xl font-bold mb-3"
+        className="text-3xl font-bold mb-3"
       >
         Module Complete!
       </motion.h2>
@@ -537,7 +528,7 @@ function Step12({ onNext }: { onNext: () => void }) {
         transition={{ delay: 0.3 }}
       >
         <p className="text-muted-foreground mb-2">Here&rsquo;s what you learned:</p>
-        <ul className="text-sm text-left space-y-2 mb-6 max-w-sm">
+        <ul className="text-base text-left space-y-2 mb-6 max-w-sm">
           <li className="flex items-start gap-2">
             <span className="text-success mt-0.5">✓</span>
             <span>PBL units follow a 5-phase story structure</span>

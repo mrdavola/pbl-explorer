@@ -205,7 +205,7 @@ export function ContinueButton({
           disabled={disabled}
           whileTap={{ scale: 0.97 }}
           className={cn(
-            "w-full py-4 px-6 rounded-2xl font-semibold text-base transition-all duration-200",
+            "w-full py-4 px-6 rounded-2xl font-semibold text-lg transition-all duration-200",
             "text-white shadow-sm",
             disabled
               ? "opacity-40 cursor-not-allowed bg-muted-foreground"

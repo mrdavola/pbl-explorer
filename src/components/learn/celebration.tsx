@@ -112,7 +112,7 @@ export function Celebration({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-3xl font-bold mb-2"
+          className="text-4xl font-bold mb-2"
         >
           Module Complete!
         </motion.h1>
@@ -121,7 +121,7 @@ export function Celebration({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="text-lg text-muted-foreground mb-8"
+          className="text-xl text-muted-foreground mb-8"
         >
           You finished &ldquo;{moduleTitle}&rdquo;
         </motion.p>

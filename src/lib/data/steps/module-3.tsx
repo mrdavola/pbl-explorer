@@ -26,7 +26,7 @@ const scales = [
     complexity: "Low — try it tomorrow",
     elements: "1-2 elements",
     color: "#16A34A",
-    emoji: "⚡",
+    emoji: "",
   },
   {
     name: "Micro",
@@ -34,7 +34,7 @@ const scales = [
     complexity: "Moderate — manageable scope",
     elements: "3-4 elements",
     color: "#2563EB",
-    emoji: "🔬",
+    emoji: "",
   },
   {
     name: "Mini",
@@ -42,7 +42,7 @@ const scales = [
     complexity: "Medium — clear milestones",
     elements: "4-5 elements",
     color: "#D97706",
-    emoji: "📐",
+    emoji: "",
   },
   {
     name: "Full",
@@ -50,33 +50,33 @@ const scales = [
     complexity: "High — authentic audience",
     elements: "5-7 elements",
     color: "#9333EA",
-    emoji: "🚀",
+    emoji: "",
   },
 ];
 
 const singleDayIdeas = [
   {
-    icon: "🎤",
+    icon: "",
     title: "Replace a test",
     description: "Have students teach the concept to someone else instead of taking a traditional test.",
   },
   {
-    icon: "❓",
+    icon: "",
     title: "Need to Know wall",
     description: "Show a hook, then have students generate questions about what they need to learn.",
   },
   {
-    icon: "💻",
+    icon: "",
     title: "Expert Zoom",
     description: "15-minute virtual guest visit — students prepare and ask real questions.",
   },
   {
-    icon: "✉️",
+    icon: "",
     title: "Real audience letter",
     description: "Students write to a real person about what they\u2019re learning.",
   },
   {
-    icon: "🎯",
+    icon: "",
     title: "Choice board",
     description: "Replace one assignment with 3-4 product options students choose from.",
   },
@@ -117,7 +117,7 @@ function Step1({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2">Start Small</h2>
+        <h2 className="text-3xl font-bold mb-2">Start Small</h2>
         <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
           You don&rsquo;t have to redesign your entire year.
         </p>
@@ -130,11 +130,10 @@ function Step1({ onNext }: { onNext: () => void }) {
         className="rounded-2xl border-2 p-6 text-white text-center"
         style={{ backgroundColor: MODULE_COLOR, borderColor: MODULE_COLOR }}
       >
-        <div className="text-4xl mb-4">🌱</div>
-        <h3 className="text-xl font-bold mb-2">
+        <h3 className="text-3xl font-bold mb-2">
           What if you could try PBL tomorrow &mdash; in a single class period?
         </h3>
-        <p className="text-sm opacity-90 leading-relaxed">
+        <p className="text-base opacity-90 leading-relaxed">
           PBL isn&rsquo;t all-or-nothing. You can start with small, low-risk
           activities and grow from there. Let&rsquo;s explore how.
         </p>
@@ -153,8 +152,8 @@ function Step2({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-1">The 4 Scales of PBL</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-3xl font-bold mb-1">The 4 Scales of PBL</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Tap each scale to explore what it looks like.
         </p>
       </motion.div>
@@ -165,14 +164,14 @@ function Step2({ onNext }: { onNext: () => void }) {
           <button
             key={scale.name}
             onClick={() => setActiveTab(i)}
-            className="px-4 py-2 rounded-xl text-sm font-medium border-2 transition-all shrink-0 press-scale"
+            className="px-4 py-2 rounded-xl text-base font-medium border-2 transition-all shrink-0 press-scale"
             style={{
               borderColor: activeTab === i ? scale.color : "var(--color-border)",
               backgroundColor: activeTab === i ? scale.color : "transparent",
               color: activeTab === i ? "white" : "var(--color-muted-foreground)",
             }}
           >
-            {scale.emoji} {scale.name}
+            {scale.name}
           </button>
         ))}
       </div>
@@ -186,23 +185,23 @@ function Step2({ onNext }: { onNext: () => void }) {
         className="rounded-2xl border-2 p-6 text-white"
         style={{ backgroundColor: active.color, borderColor: active.color }}
       >
-        <h3 className="text-xl font-bold mb-4">
-          {active.emoji} {active.name}
+        <h3 className="text-2xl font-bold mb-4">
+          {active.name}
         </h3>
         <div className="space-y-3">
           <div>
             <p className="text-xs uppercase tracking-wider opacity-70 font-semibold">Duration</p>
-            <p className="text-sm font-medium">{active.duration}</p>
+            <p className="text-base font-medium">{active.duration}</p>
           </div>
           <div>
             <p className="text-xs uppercase tracking-wider opacity-70 font-semibold">Complexity</p>
-            <p className="text-sm font-medium">{active.complexity}</p>
+            <p className="text-base font-medium">{active.complexity}</p>
           </div>
           <div>
             <p className="text-xs uppercase tracking-wider opacity-70 font-semibold">
               Gold Standard Elements
             </p>
-            <p className="text-sm font-medium">{active.elements}</p>
+            <p className="text-base font-medium">{active.elements}</p>
           </div>
         </div>
       </motion.div>
@@ -217,8 +216,8 @@ function Step3({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">5 Things You Can Try Tomorrow</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">5 Things You Can Try Tomorrow</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Single-day PBL activities that require zero prep overhaul.
         </p>
       </motion.div>
@@ -230,12 +229,11 @@ function Step3({ onNext }: { onNext: () => void }) {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
-            className="rounded-2xl border-2 border-border p-4 bg-card flex items-start gap-3"
+            className="rounded-2xl border-2 border-border p-4 bg-card"
           >
-            <span className="text-2xl shrink-0">{idea.icon}</span>
             <div>
-              <p className="font-semibold text-sm">{idea.title}</p>
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="font-semibold text-base">{idea.title}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {idea.description}
               </p>
             </div>
@@ -258,8 +256,8 @@ function Step4({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">Micro-Project Examples</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">Micro-Project Examples</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Tap each card to see the details.
         </p>
       </motion.div>
@@ -379,17 +377,9 @@ function Step7({ onNext }: { onNext: () => void }) {
 function Step8({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        className="text-6xl mb-6"
-      >
-        🎉
-      </motion.div>
       <motion.h2
         {...fadeUp}
-        className="text-2xl font-bold mb-3"
+        className="text-3xl font-bold mb-3"
       >
         You&rsquo;re ready to start!
       </motion.h2>
@@ -399,7 +389,7 @@ function Step8({ onNext }: { onNext: () => void }) {
         transition={{ delay: 0.3 }}
       >
         <p className="text-muted-foreground mb-2">Key takeaways:</p>
-        <ul className="text-sm text-left space-y-2 mb-6 max-w-sm">
+        <ul className="text-base text-left space-y-2 mb-6 max-w-sm">
           <li className="flex items-start gap-2">
             <span className="text-success mt-0.5">✓</span>
             <span>PBL comes in 4 scales &mdash; from single-day to full units</span>

@@ -39,7 +39,7 @@ export function ScenarioQuiz({
     <div className="flex flex-col flex-1">
       {/* Question */}
       <div className="mb-8">
-        <h2 className="text-xl sm:text-2xl font-bold leading-snug text-balance">
+        <h2 className="text-2xl sm:text-3xl font-bold leading-snug text-balance">
           {question}
         </h2>
       </div>
@@ -58,7 +58,7 @@ export function ScenarioQuiz({
               disabled={answered}
               whileTap={answered ? {} : { scale: 0.97 }}
               className={cn(
-                "relative w-full text-left px-5 py-4 rounded-2xl border-2 font-medium text-base transition-all duration-200",
+                "relative w-full text-left px-5 py-4 rounded-2xl border-2 font-medium text-lg transition-all duration-200",
                 !answered && "hover:border-primary/30 hover:bg-muted/50 press-scale cursor-pointer",
                 answered && "cursor-default",
                 !answered && !isThis && "border-border bg-card",
@@ -101,7 +101,7 @@ export function ScenarioQuiz({
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              "rounded-2xl px-5 py-4 text-sm leading-relaxed",
+              "rounded-2xl px-5 py-4 text-base leading-relaxed",
               isCorrect
                 ? "bg-success-light text-[oklch(0.30_0.08_155)]"
                 : "bg-error-light text-[oklch(0.30_0.08_25)]"
@@ -125,7 +125,7 @@ export function ScenarioQuiz({
         >
           <button
             onClick={onComplete}
-            className="w-full py-4 px-6 rounded-2xl font-semibold text-base text-white shadow-sm press-scale hover:shadow-md transition-shadow"
+            className="w-full py-4 px-6 rounded-2xl font-semibold text-lg text-white shadow-sm press-scale hover:shadow-md transition-shadow"
             style={{ backgroundColor: moduleColor }}
           >
             Continue

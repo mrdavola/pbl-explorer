@@ -85,7 +85,7 @@ export function DragSort({
     <div className="flex flex-col flex-1">
       {/* Unplaced items */}
       <div className="mb-6">
-        <p className="text-sm font-medium text-muted-foreground mb-3">
+        <p className="text-base font-medium text-muted-foreground mb-3">
           Tap an item, then tap where it belongs:
         </p>
         <div className="flex flex-wrap gap-2">
@@ -99,7 +99,7 @@ export function DragSort({
                 exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
                 onClick={() => setActiveItem(activeItem === item.id ? null : item.id)}
                 className={cn(
-                  "px-4 py-2.5 rounded-xl text-sm font-medium border-2 transition-all press-scale",
+                  "px-4 py-3 rounded-xl text-base font-medium border-2 transition-all press-scale",
                   activeItem === item.id
                     ? "border-primary bg-primary/5 shadow-sm"
                     : "border-border bg-card hover:border-primary/30"
@@ -142,7 +142,7 @@ export function DragSort({
               )}
             >
               <p
-                className="text-sm font-bold mb-2"
+                className="text-base font-bold mb-2"
                 style={{ color: zone.color }}
               >
                 {zone.label}
@@ -154,7 +154,7 @@ export function DragSort({
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     className={cn(
-                      "inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium",
+                      "inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium",
                       feedback[item.id] === "correct"
                         ? "bg-success-light text-[oklch(0.30_0.08_155)]"
                         : "bg-error-light text-[oklch(0.30_0.08_25)] shake"
@@ -179,7 +179,7 @@ export function DragSort({
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
-            className="mt-3 rounded-xl bg-error-light px-4 py-3 text-sm text-[oklch(0.30_0.08_25)]"
+            className="mt-3 rounded-xl bg-error-light px-4 py-3 text-base text-[oklch(0.30_0.08_25)]"
           >
             <span className="font-semibold">Not quite!</span> {wrongMessage}
           </motion.div>
@@ -194,11 +194,11 @@ export function DragSort({
           className="mt-auto pt-6 pb-4"
         >
           <div className="text-center mb-4">
-            <p className="text-success font-semibold">All correct! Well done.</p>
+            <p className="text-success font-semibold text-lg">All correct! Well done.</p>
           </div>
           <button
             onClick={onComplete}
-            className="w-full py-4 px-6 rounded-2xl font-semibold text-base text-white shadow-sm press-scale hover:shadow-md transition-shadow"
+            className="w-full py-4 px-6 rounded-2xl font-semibold text-lg text-white shadow-sm press-scale hover:shadow-md transition-shadow"
             style={{ backgroundColor: moduleColor }}
           >
             Continue

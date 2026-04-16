@@ -83,9 +83,9 @@ export function SliderSpectrum({
   const fillPercent = ((value - min) / (max - min)) * 100;
 
   return (
-    <div className="w-full space-y-6 pb-28">
+    <div className="w-full space-y-8 pb-28">
       {/* Question */}
-      <p className="text-lg font-semibold leading-snug text-foreground">
+      <p className="text-xl font-semibold leading-snug text-foreground">
         {question}
       </p>
 
@@ -93,10 +93,10 @@ export function SliderSpectrum({
       <div className="px-0">
         {/* End labels */}
         <div className="flex justify-between items-end mb-3 px-1">
-          <span className="text-sm font-medium text-muted-foreground max-w-[40%] leading-tight">
+          <span className="text-base font-medium text-muted-foreground max-w-[40%] leading-tight">
             {leftLabel}
           </span>
-          <span className="text-sm font-medium text-muted-foreground max-w-[40%] leading-tight text-right">
+          <span className="text-base font-medium text-muted-foreground max-w-[40%] leading-tight text-right">
             {rightLabel}
           </span>
         </div>
@@ -228,7 +228,7 @@ export function SliderSpectrum({
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="rounded-xl border border-border bg-card p-4"
             >
-              <p className="text-sm leading-relaxed text-foreground/90">
+              <p className="text-base leading-relaxed text-foreground/90">
                 {activeSnap.feedback}
               </p>
             </motion.div>

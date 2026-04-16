@@ -23,7 +23,7 @@ function Step1({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2">PBL + AI</h2>
+        <h2 className="text-3xl font-bold mb-2">PBL + AI</h2>
         <p className="text-muted-foreground mb-6">
           AI can help you plan PBL faster. But it can&rsquo;t replace what makes PBL
           work: <strong>you</strong>.
@@ -36,7 +36,7 @@ function Step1({ onNext }: { onNext: () => void }) {
         transition={{ delay: 0.2 }}
         className="rounded-2xl border-2 border-border p-6 bg-card mb-6"
       >
-        <p className="text-sm leading-relaxed text-muted-foreground">
+        <p className="text-base leading-relaxed text-muted-foreground">
           The best PBL happens when teachers use AI as a thought partner &mdash; not a
           replacement. AI can generate ideas, draft materials, and save you hours of
           planning. But the magic of PBL lives in the human moments: the relationships
@@ -48,7 +48,7 @@ function Step1({ onNext }: { onNext: () => void }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
-        className="text-sm text-muted-foreground text-center"
+        className="text-base text-muted-foreground text-center"
       >
         Let&rsquo;s explore the human + AI partnership.
       </motion.p>
@@ -62,7 +62,6 @@ function Step1({ onNext }: { onNext: () => void }) {
 function Step2({ onNext }: { onNext: () => void }) {
   const steps = [
     {
-      emoji: "\uD83E\uDDD1\u200D\uD83C\uDFEB",
       title: "Start Human",
       description:
         "You choose the topic, framework, and driving question structure. Your expertise sets the direction.",
@@ -70,7 +69,6 @@ function Step2({ onNext }: { onNext: () => void }) {
       textColor: "text-white",
     },
     {
-      emoji: "\uD83E\uDD16",
       title: "Use AI",
       description:
         "AI generates content within your framework \u2014 narratives, calendars, rubrics, and variations.",
@@ -78,7 +76,6 @@ function Step2({ onNext }: { onNext: () => void }) {
       textColor: "text-white",
     },
     {
-      emoji: "\uD83E\uDDD1\u200D\uD83C\uDFEB",
       title: "End Human",
       description:
         "You review, edit, and adapt everything to YOUR students. The final call is always yours.",
@@ -90,7 +87,7 @@ function Step2({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2">The Philosophy</h2>
+        <h2 className="text-3xl font-bold mb-2">The Philosophy</h2>
         <p className="text-muted-foreground mb-6">
           Start Human &rarr; Use AI &rarr; End Human
         </p>
@@ -107,15 +104,14 @@ function Step2({ onNext }: { onNext: () => void }) {
             style={{ backgroundColor: step.color, borderColor: step.color }}
           >
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-2xl">{step.emoji}</span>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-md">
                   Step {i + 1}
                 </span>
-                <h3 className="font-bold text-sm">{step.title}</h3>
+                <h3 className="font-bold text-base">{step.title}</h3>
               </div>
             </div>
-            <p className="text-sm opacity-90 leading-relaxed">{step.description}</p>
+            <p className="text-base opacity-90 leading-relaxed">{step.description}</p>
           </motion.div>
         ))}
       </div>
@@ -125,7 +121,7 @@ function Step2({ onNext }: { onNext: () => void }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7 }}
-        className="text-sm text-muted-foreground text-center"
+        className="text-base text-muted-foreground text-center"
       >
         AI is the powerful middle step. Humans own the beginning and the end.
       </motion.p>
@@ -140,7 +136,7 @@ function Step3({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2">AI vs. Human Strengths</h2>
+        <h2 className="text-3xl font-bold mb-2">AI vs. Human Strengths</h2>
         <p className="text-muted-foreground mb-6">
           Each brings something the other can&rsquo;t.
         </p>
@@ -155,11 +151,10 @@ function Step3({ onNext }: { onNext: () => void }) {
           className="rounded-2xl border-2 p-5 bg-card"
           style={{ borderColor: "oklch(0.65 0.12 310)" }}
         >
-          <div className="text-2xl mb-3">{"\uD83E\uDD16"}</div>
-          <h3 className="font-bold text-sm mb-3" style={{ color: "oklch(0.65 0.12 310)" }}>
+          <h3 className="font-bold text-base mb-3" style={{ color: "oklch(0.65 0.12 310)" }}>
             AI is great at&hellip;
           </h3>
-          <ul className="text-xs text-muted-foreground space-y-2 leading-relaxed">
+          <ul className="text-sm text-muted-foreground space-y-2 leading-relaxed">
             <li className="flex items-start gap-1.5">
               <span style={{ color: "oklch(0.65 0.12 310)" }}>{"\u2022"}</span>
               Generating ideas quickly
@@ -187,9 +182,8 @@ function Step3({ onNext }: { onNext: () => void }) {
           className="rounded-2xl border-2 p-5 text-white"
           style={{ backgroundColor: MODULE_COLOR, borderColor: MODULE_COLOR }}
         >
-          <div className="text-2xl mb-3">{"\uD83E\uDDD1\u200D\uD83C\uDFEB"}</div>
-          <h3 className="font-bold text-sm mb-3">Humans are great at&hellip;</h3>
-          <ul className="text-xs opacity-90 space-y-2 leading-relaxed">
+          <h3 className="font-bold text-base mb-3">Humans are great at&hellip;</h3>
+          <ul className="text-sm opacity-90 space-y-2 leading-relaxed">
             <li className="flex items-start gap-1.5">
               <span>{"\u2022"}</span>
               Understanding students
@@ -214,7 +208,7 @@ function Step3({ onNext }: { onNext: () => void }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="text-sm text-muted-foreground text-center"
+        className="text-base text-muted-foreground text-center"
       >
         The goal isn&rsquo;t to replace one with the other &mdash; it&rsquo;s to combine them.
       </motion.p>
@@ -229,8 +223,8 @@ function Step4({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">AI Role Sorter</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">AI Role Sorter</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Sort each PBL task into the right zone.
         </p>
       </motion.div>
@@ -281,7 +275,7 @@ function Step5({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2">Practical Tips</h2>
+        <h2 className="text-3xl font-bold mb-2">Practical Tips</h2>
         <p className="text-muted-foreground mb-6">
           Four concrete ways to use AI in your PBL planning.
         </p>
@@ -297,12 +291,12 @@ function Step5({ onNext }: { onNext: () => void }) {
             className="rounded-2xl border-2 border-border p-5 bg-card flex items-start gap-4"
           >
             <span
-              className="flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold shrink-0 text-white"
+              className="flex items-center justify-center w-8 h-8 rounded-full text-base font-bold shrink-0 text-white"
               style={{ backgroundColor: MODULE_COLOR }}
             >
               {tip.number}
             </span>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-base text-muted-foreground leading-relaxed">
               {tip.text}
             </p>
           </motion.div>
@@ -365,7 +359,7 @@ function Step8({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2 font-display">Go Deeper</h2>
+        <h2 className="text-3xl font-bold mb-2 font-display">Go Deeper</h2>
         <p className="text-muted-foreground mb-6">
           Want to explore more about using AI in PBL? Check out these resources.
         </p>
@@ -383,7 +377,7 @@ function Step9({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2 font-display">Your PBL Journey Starts Now</h2>
+        <h2 className="text-3xl font-bold mb-2 font-display">Your PBL Journey Starts Now</h2>
         <p className="text-lg mb-6 text-muted-foreground">You have completed all 7 modules. Take a moment to reflect on your learning journey.</p>
       </motion.div>
       <ReflectionPrompt
@@ -401,17 +395,9 @@ function Step9({ onNext }: { onNext: () => void }) {
 function Step10({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        className="text-6xl mb-6"
-      >
-        {"\uD83D\uDE80"}
-      </motion.div>
       <motion.h2
         {...fadeUp}
-        className="text-2xl font-bold mb-3"
+        className="text-3xl font-bold mb-3"
       >
         You did it!
       </motion.h2>
@@ -427,12 +413,12 @@ function Step10({ onNext }: { onNext: () => void }) {
           className="rounded-2xl p-5 mb-6 max-w-sm text-left text-white"
           style={{ backgroundColor: MODULE_COLOR }}
         >
-          <p className="text-sm leading-relaxed font-medium">
+          <p className="text-base leading-relaxed font-medium">
             Go make something amazing with your students. Use AI to plan faster,
             but never forget &mdash; the magic happens because of you.
           </p>
         </div>
-        <ul className="text-sm text-left space-y-2 mb-6 max-w-sm">
+        <ul className="text-base text-left space-y-2 mb-6 max-w-sm">
           <li className="flex items-start gap-2">
             <span className="text-success mt-0.5">{"\u2713"}</span>
             <span>AI is a powerful planning partner, not a replacement</span>

@@ -23,24 +23,27 @@ export function FlipCard({
   onFlip,
 }: FlipCardProps) {
   const [flipped, setFlipped] = useState(false);
+  const [hasFlippedOnce, setHasFlippedOnce] = useState(false);
   const { play } = useSoundEffects();
 
   function handleFlip() {
-    if (!flipped) {
-      setFlipped(true);
-      play('click');
+    const next = !flipped;
+    setFlipped(next);
+    play("click");
+    if (!hasFlippedOnce && next) {
+      setHasFlippedOnce(true);
       onFlip?.();
     }
   }
 
   return (
     <div
-      className="perspective-[1000px] w-full cursor-pointer"
+      className="perspective-[1000px] w-full cursor-pointer select-none"
       onClick={handleFlip}
       onKeyDown={(e) => e.key === "Enter" && handleFlip()}
       tabIndex={0}
       role="button"
-      aria-label={flipped ? "Card revealed" : "Tap to reveal"}
+      aria-label={flipped ? "Tap to see the original" : frontLabel}
     >
       <motion.div
         className="relative w-full"
@@ -51,22 +54,43 @@ export function FlipCard({
         {/* Front */}
         <div
           className={cn(
-            "w-full rounded-2xl border-2 border-border p-6 min-h-[160px] flex flex-col justify-between",
+            "w-full rounded-2xl border-2 border-border min-h-[140px] flex",
             "bg-card backface-hidden"
           )}
           style={{ backfaceVisibility: "hidden" }}
         >
-          <div className="text-base font-medium leading-relaxed">{front}</div>
-          <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1.5">
-            <span className="inline-block w-4 h-4 rounded-full border-2 border-current" />
-            {frontLabel}
-          </p>
+          <div className="flex-1 flex items-center p-5 pr-3">
+            <p className="text-lg font-medium leading-snug">{front}</p>
+          </div>
+          <div className="flex items-center pr-4 pl-2 border-l border-border/50">
+            <div className="flex flex-col items-center gap-1.5">
+              <motion.div
+                animate={{ scale: [1, 1.15, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="w-8 h-8 rounded-full border-2 flex items-center justify-center"
+                style={{ borderColor: color, color }}
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M5 3L9 7L5 11"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </motion.div>
+              <span className="text-[10px] font-medium text-muted-foreground leading-tight text-center w-12">
+                Tap
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Back */}
         <div
           className={cn(
-            "absolute inset-0 w-full rounded-2xl border-2 p-6 min-h-[160px] flex flex-col justify-between",
+            "absolute inset-0 w-full rounded-2xl border-2 min-h-[140px] flex",
             "backface-hidden text-white"
           )}
           style={{
@@ -76,10 +100,27 @@ export function FlipCard({
             borderColor: color,
           }}
         >
-          <div className="text-base font-medium leading-relaxed">{back}</div>
-          {backLabel && (
-            <p className="text-xs opacity-70 mt-3">{backLabel}</p>
-          )}
+          <div className="flex-1 flex items-center p-5 pr-3">
+            <p className="text-lg font-medium leading-snug">{back}</p>
+          </div>
+          <div className="flex items-center pr-4 pl-2 border-l border-white/20">
+            <div className="flex flex-col items-center gap-1.5">
+              <div className="w-8 h-8 rounded-full border-2 border-white/50 flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M9 3L5 7L9 11"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <span className="text-[10px] font-medium opacity-60 leading-tight text-center w-12">
+                Flip
+              </span>
+            </div>
+          </div>
         </div>
       </motion.div>
     </div>
@@ -108,7 +149,7 @@ export function FlipCardGrid({
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-5">
       {cards.map((card, i) => (
         <FlipCard
           key={i}

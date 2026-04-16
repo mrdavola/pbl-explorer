@@ -19,38 +19,60 @@ const fadeUp = {
   transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
 };
 
+/* Floating terms visual for Step 1 */
+const floatingTerms = [
+  { label: "Project-Based", x: "5%", y: "0%", rotate: -3, delay: 0.1 },
+  { label: "Problem-Based", x: "42%", y: "5%", rotate: 2, delay: 0.2 },
+  { label: "Inquiry-Based", x: "15%", y: "22%", rotate: -1, delay: 0.3 },
+  { label: "Challenge-Based", x: "48%", y: "18%", rotate: 3, delay: 0.15 },
+  { label: "Design Thinking", x: "8%", y: "42%", rotate: -2, delay: 0.25 },
+  { label: "STEM", x: "60%", y: "38%", rotate: 1, delay: 0.35 },
+  { label: "Service Learning", x: "25%", y: "58%", rotate: -1, delay: 0.18 },
+  { label: "Maker Education", x: "55%", y: "55%", rotate: 2, delay: 0.28 },
+];
+
 /* Step 1 — Hook */
 function Step1({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2">The Alphabet Soup Explained</h2>
-        <p className="text-muted-foreground mb-6">
-          PBL, PrBL, CBL, STEM, IBL&hellip; there are SO many acronyms in education.
+        <h2 className="text-3xl font-bold mb-2 text-balance">
+          Project-Based&hellip; Problem-Based&hellip; Challenge-Based&hellip;
+        </h2>
+        <p className="text-lg text-muted-foreground mb-6">
+          Aren&rsquo;t these all the same thing?
         </p>
       </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="rounded-2xl border-2 border-border p-6 bg-card mb-6"
-      >
-        <p className="text-sm leading-relaxed text-muted-foreground">
-          Every time you turn around, there&rsquo;s a new acronym for a &ldquo;new&rdquo;
-          teaching approach. It can feel overwhelming &mdash; and a little silly. But here&rsquo;s
-          the good news: once you understand how they relate to each other, the alphabet
-          soup starts to make sense.
-        </p>
-      </motion.div>
+      {/* Floating terms cloud */}
+      <div className="relative w-full min-h-[240px] my-4 mb-8">
+        {floatingTerms.map((term, i) => (
+          <motion.span
+            key={term.label}
+            className="absolute px-3.5 py-2 rounded-xl text-base font-medium border-2 border-border bg-card shadow-sm"
+            style={{ left: term.x, top: term.y }}
+            initial={{ opacity: 0, rotate: term.rotate * 3, scale: 0.8 }}
+            animate={{ opacity: 1, rotate: term.rotate, scale: 1 }}
+            transition={{
+              delay: term.delay,
+              duration: 0.5,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            {term.label}
+          </motion.span>
+        ))}
+      </div>
 
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-        className="text-sm text-muted-foreground text-center"
+        transition={{ delay: 0.6 }}
+        className="text-base text-muted-foreground leading-relaxed text-center"
       >
-        Let&rsquo;s sort them out once and for all.
+        Teachers hear these terms used interchangeably all the time.
+        They&rsquo;re related &mdash; but they&rsquo;re not the same.
+        Let&rsquo;s untangle them.
       </motion.p>
 
       <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
@@ -63,7 +85,7 @@ function Step2({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2">The Big Picture</h2>
+        <h2 className="text-3xl font-bold mb-2">The Big Picture</h2>
         <p className="text-muted-foreground mb-6">
           PBL is the broadest framework. Other approaches fit inside or overlap with it.
         </p>
@@ -82,7 +104,7 @@ function Step2({ onNext }: { onNext: () => void }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="text-sm text-muted-foreground text-center"
+        className="text-base text-muted-foreground text-center"
       >
         The approaches inside the circle are subsets or close relatives of PBL.
         The ones outside are lenses or formats &mdash; not teaching methods.
@@ -118,8 +140,8 @@ function Step4({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">Key Comparisons &mdash; Part 1</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">Key Comparisons &mdash; Part 1</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Tap each card to see how it differs from PBL.
         </p>
       </motion.div>
@@ -147,8 +169,8 @@ function Step5({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">Key Comparisons &mdash; Part 2</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">Key Comparisons &mdash; Part 2</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Two more approaches that overlap with PBL.
         </p>
       </motion.div>
@@ -175,21 +197,18 @@ function Step5({ onNext }: { onNext: () => void }) {
 function Step6({ onNext }: { onNext: () => void }) {
   const cards = [
     {
-      emoji: "\uD83D\uDD2C",
       title: "STEM / STEAM",
       type: "Content Lens",
       description:
         "STEM describes WHAT content you teach (Science, Technology, Engineering, Math). It\u2019s not a teaching method \u2014 you can teach STEM through PBL, lectures, or anything else.",
     },
     {
-      emoji: "\uD83D\uDCA1",
       title: "Genius Hour",
       type: "Dedicated Time",
       description:
         "Genius Hour gives students dedicated time to explore personal interests. It\u2019s a format, not a method \u2014 students might use PBL, inquiry, or independent study during that time.",
     },
     {
-      emoji: "\uD83E\uDD1D",
       title: "Service Learning",
       type: "Community Focus",
       description:
@@ -200,8 +219,8 @@ function Step6({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">Lens vs. Method</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">Lens vs. Method</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Not everything with an acronym is a teaching method.
         </p>
       </motion.div>
@@ -216,9 +235,8 @@ function Step6({ onNext }: { onNext: () => void }) {
             className="rounded-2xl border-2 border-border p-5 bg-card"
           >
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-2xl">{card.emoji}</span>
               <div>
-                <h3 className="font-bold text-sm">{card.title}</h3>
+                <h3 className="font-bold text-base">{card.title}</h3>
                 <span
                   className="text-xs font-semibold uppercase tracking-wider"
                   style={{ color: MODULE_COLOR }}
@@ -227,7 +245,7 @@ function Step6({ onNext }: { onNext: () => void }) {
                 </span>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-base text-muted-foreground leading-relaxed">
               {card.description}
             </p>
           </motion.div>
@@ -305,7 +323,7 @@ function Step10({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-4">Go Deeper</h2>
+        <h2 className="text-2xl font-bold mb-4">Go Deeper</h2>
       </motion.div>
       <GoDeeper resources={getResourcesForModule('alphabet-soup')} moduleColor={MODULE_COLOR} />
       <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
@@ -317,17 +335,9 @@ function Step10({ onNext }: { onNext: () => void }) {
 function Step11({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        className="text-6xl mb-6"
-      >
-        {"\uD83E\uDDE9"}
-      </motion.div>
       <motion.h2
         {...fadeUp}
-        className="text-2xl font-bold mb-3"
+        className="text-3xl font-bold mb-3"
       >
         Alphabet Soup — Decoded!
       </motion.h2>
@@ -341,12 +351,12 @@ function Step11({ onNext }: { onNext: () => void }) {
           className="rounded-2xl p-5 mb-6 max-w-sm text-left text-white"
           style={{ backgroundColor: MODULE_COLOR }}
         >
-          <p className="text-sm leading-relaxed font-medium">
+          <p className="text-base leading-relaxed font-medium">
             PBL is the broadest framework. Everything else is either a subset, a
             lens, or a specific process that can be used within PBL.
           </p>
         </div>
-        <ul className="text-sm text-left space-y-2 mb-6 max-w-sm">
+        <ul className="text-base text-left space-y-2 mb-6 max-w-sm">
           <li className="flex items-start gap-2">
             <span className="text-success mt-0.5">{"\u2713"}</span>
             <span>Problem-Based, Challenge-Based, and Inquiry-Based are close relatives of PBL</span>
@@ -373,7 +383,7 @@ function Step11({ onNext }: { onNext: () => void }) {
 export const module6Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Step11];
 
 export const module6NarrateTexts: string[] = [
-  "PBL, PrBL, CBL, STEM, IBL — there are so many acronyms in education. It can feel overwhelming, but once you understand how they relate to each other, the alphabet soup starts to make sense.",
+  "Project-Based, Problem-Based, Challenge-Based, Design Thinking — teachers hear these terms used interchangeably all the time. They're related, but they're not the same. Let's untangle them.",
   "Here's the big picture: PBL is the broadest framework. Other approaches either fit inside it, overlap with it, or are something different entirely — like a content lens or a time format rather than a teaching method.",
   "Let's match each acronym to what drives it. PBL is driven by meaningful questions. Problem-Based Learning focuses on solving complex problems. Inquiry-Based Learning follows student questions. Challenge-Based Learning is about taking action on real issues.",
   "How is Problem-Based Learning different from PBL? It focuses on solving a specific case, often in days to weeks. PBL is broader — students learn through a sustained project that results in a public product. Design Thinking is a creative process that can be used within PBL.",

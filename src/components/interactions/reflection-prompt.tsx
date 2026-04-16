@@ -83,10 +83,10 @@ export function ReflectionPrompt({
     <div className="flex flex-col flex-1 pb-28">
       {/* Question */}
       <div className="mb-6">
-        <h2 className="text-xl sm:text-2xl font-bold leading-snug text-balance">
+        <h2 className="text-2xl sm:text-3xl font-bold leading-snug text-balance">
           {question}
         </h2>
-        <p className="text-sm text-muted-foreground mt-2">
+        <p className="text-base text-muted-foreground mt-2">
           This reflection is optional but encouraged. Your response is saved
           locally on this device.
         </p>

@@ -40,23 +40,27 @@ function Step2({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-2">The Key Distinction</h2>
-        <p className="text-muted-foreground mb-8">
+        <h2 className="text-3xl font-bold mb-2">The Key Distinction</h2>
+        <p className="text-lg text-muted-foreground mb-8">
           Think of it like a meal...
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="flex flex-col gap-4 mb-8">
         {/* Dessert */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2, duration: 0.4 }}
-          className="rounded-2xl border-2 border-border p-5 bg-card text-center"
+          className="rounded-2xl border-2 border-border p-6 bg-card"
         >
-          <div className="text-4xl mb-3">🍰</div>
-          <h3 className="font-bold text-sm mb-2">&ldquo;Doing a Project&rdquo;</h3>
-          <p className="text-xs text-muted-foreground leading-relaxed">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center font-bold text-muted-foreground text-sm shrink-0">
+              vs
+            </div>
+            <h3 className="font-bold text-xl">&ldquo;Doing a Project&rdquo;</h3>
+          </div>
+          <p className="text-base text-muted-foreground leading-relaxed">
             A fun add-on <em>after</em> the &ldquo;real&rdquo; teaching is done. The dessert.
           </p>
         </motion.div>
@@ -66,12 +70,11 @@ function Step2({ onNext }: { onNext: () => void }) {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, duration: 0.4 }}
-          className="rounded-2xl border-2 p-5 text-center text-white"
+          className="rounded-2xl border-2 p-6 text-white"
           style={{ backgroundColor: MODULE_COLOR, borderColor: MODULE_COLOR }}
         >
-          <div className="text-4xl mb-3">🥘</div>
-          <h3 className="font-bold text-sm mb-2">Project-Based Learning</h3>
-          <p className="text-xs opacity-90 leading-relaxed">
+          <h3 className="font-bold text-xl mb-2">Project-Based Learning</h3>
+          <p className="text-base opacity-90 leading-relaxed">
             The project IS how students learn. It&rsquo;s the main course.
           </p>
         </motion.div>
@@ -81,7 +84,7 @@ function Step2({ onNext }: { onNext: () => void }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="text-sm text-muted-foreground leading-relaxed text-center"
+        className="text-base text-muted-foreground leading-relaxed text-center"
       >
         In PBL, the project isn&rsquo;t assigned at the end — it drives the entire learning experience from day one.
       </motion.p>
@@ -91,7 +94,7 @@ function Step2({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Steps 3–4 — Flip Cards (2 per step) */
+/* Steps 3–5 — Flip Cards (2 per step) */
 const flipPairs = [
   {
     front: "Comes AFTER the unit is taught",
@@ -123,10 +126,10 @@ function Step3({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">
+        <h2 className="text-2xl font-bold mb-1">
           &ldquo;Doing a Project&rdquo; vs. PBL
         </h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <p className="text-base text-muted-foreground mb-6">
           Tap each card to see the PBL difference.
         </p>
       </motion.div>
@@ -144,8 +147,8 @@ function Step4({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">More Differences</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">More Differences</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Keep flipping to build the full picture.
         </p>
       </motion.div>
@@ -163,8 +166,8 @@ function Step5({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">The Last Two</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">The Last Two</h2>
+        <p className="text-base text-muted-foreground mb-6">
           These might be the most important distinctions.
         </p>
       </motion.div>
@@ -203,22 +206,22 @@ function Step7({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-2xl font-bold mb-6">See It in Action</h2>
+        <h2 className="text-3xl font-bold mb-6">See It in Action</h2>
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
-        className="rounded-2xl border-2 border-border p-5 bg-card mb-4"
+        className="rounded-2xl border-2 border-border p-6 bg-card mb-4"
       >
         <div className="flex items-center gap-2 mb-3">
           <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground bg-muted px-2 py-0.5 rounded-md">
             Before
           </span>
-          <span className="text-xs text-muted-foreground">Doing a Project</span>
+          <span className="text-sm text-muted-foreground">Doing a Project</span>
         </div>
-        <p className="text-sm leading-relaxed">
+        <p className="text-base leading-relaxed">
           Mrs. Garcia teaches fractions for 3 weeks, then assigns a poster project where students illustrate fraction concepts.
         </p>
       </motion.div>
@@ -227,27 +230,33 @@ function Step7({ onNext }: { onNext: () => void }) {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="rounded-2xl border-2 p-5 text-white mb-4"
+        className="rounded-2xl border-2 p-6 text-white mb-4"
         style={{ backgroundColor: MODULE_COLOR, borderColor: MODULE_COLOR }}
       >
         <div className="flex items-center gap-2 mb-3">
           <span className="text-xs font-bold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-md">
             After
           </span>
-          <span className="text-xs opacity-80">Project-Based Learning</span>
+          <span className="text-sm opacity-80">Project-Based Learning</span>
         </div>
-        <p className="text-sm leading-relaxed opacity-95">
+        <p className="text-base leading-relaxed opacity-95 mb-4">
           Mrs. Garcia&rsquo;s students run a class bakery. They learn fractions by halving and doubling recipes, pricing items, and making change. The bakery sale IS the unit.
         </p>
+        <div className="rounded-xl bg-white/15 px-4 py-3">
+          <p className="text-sm font-medium opacity-90 mb-1">A simpler first step?</p>
+          <p className="text-sm opacity-80 leading-relaxed">
+            Students survey classmates about lunch preferences, tally results using fractions, and present findings to the cafeteria manager. Same math, real audience, one week.
+          </p>
+        </div>
       </motion.div>
 
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="text-sm text-muted-foreground text-center mb-6"
+        className="text-base text-muted-foreground text-center mb-6"
       >
-        Same content. Completely different experience.
+        Same content. Completely different experience. Your first PBL project doesn&rsquo;t have to be elaborate &mdash; it just has to be real.
       </motion.p>
 
       <GoDeeper resources={getResourcesForModule('what-is-pbl')} moduleColor={MODULE_COLOR} />
@@ -262,8 +271,8 @@ function Step8({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
-        <h2 className="text-xl font-bold mb-1">Knowledge Check</h2>
-        <p className="text-sm text-muted-foreground mb-6">
+        <h2 className="text-2xl font-bold mb-1">Knowledge Check</h2>
+        <p className="text-base text-muted-foreground mb-6">
           Sort each scenario into the correct category.
         </p>
       </motion.div>
@@ -339,18 +348,10 @@ function Step9({ onNext }: { onNext: () => void }) {
 /* Step 10 — Completion summary (handled by parent as celebration) */
 function Step10({ onNext }: { onNext: () => void }) {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center text-center">
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        className="text-6xl mb-6"
-      >
-        🎉
-      </motion.div>
+    <div className="flex flex-col flex-1 items-center justify-center text-center min-h-[70dvh]">
       <motion.h2
         {...fadeUp}
-        className="text-2xl font-bold mb-3"
+        className="text-3xl font-bold mb-4"
       >
         You nailed it!
       </motion.h2>
@@ -359,18 +360,18 @@ function Step10({ onNext }: { onNext: () => void }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
-        <p className="text-muted-foreground mb-2">Here&rsquo;s what you learned:</p>
-        <ul className="text-sm text-left space-y-2 mb-6 max-w-sm">
-          <li className="flex items-start gap-2">
-            <span className="text-success mt-0.5">✓</span>
+        <p className="text-lg text-muted-foreground mb-6">Here&rsquo;s what you learned:</p>
+        <ul className="text-base text-left space-y-4 mb-8 max-w-sm">
+          <li className="flex items-start gap-3">
+            <span className="text-success mt-0.5 font-bold">&#10003;</span>
             <span>The difference between &ldquo;doing a project&rdquo; and PBL</span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-success mt-0.5">✓</span>
+          <li className="flex items-start gap-3">
+            <span className="text-success mt-0.5 font-bold">&#10003;</span>
             <span>In PBL, the project IS the unit — not an add-on</span>
           </li>
-          <li className="flex items-start gap-2">
-            <span className="text-success mt-0.5">✓</span>
+          <li className="flex items-start gap-3">
+            <span className="text-success mt-0.5 font-bold">&#10003;</span>
             <span>PBL features student voice, public products, and real audiences</span>
           </li>
         </ul>

@@ -58,10 +58,10 @@ export function ClusterTaxonomy() {
 }
 
 function ClusterTaxonomyDesktop() {
-  const cx = 300;
-  const cy = 300;
-  const hubR = 60;
-  const sectorR = 200;
+  const cx = 400;
+  const cy = 400;
+  const hubR = 80;
+  const sectorR = 280;
 
   const quadrantAngles = [
     { start: -Math.PI / 2, mid: -Math.PI / 4 },
@@ -72,8 +72,8 @@ function ClusterTaxonomyDesktop() {
 
   return (
     <svg
-      viewBox="0 0 600 600"
-      className="w-full max-w-xl mx-auto"
+      viewBox="0 0 800 800"
+      className="w-full mx-auto"
       role="img"
       aria-label="Cluster Taxonomy showing learning approaches organized by driver"
     >
@@ -91,7 +91,7 @@ function ClusterTaxonomyDesktop() {
         const { mid } = quadrantAngles[qi];
         const clusterCx = cx + (sectorR * 0.48) * Math.cos(mid);
         const clusterCy = cy + (sectorR * 0.48) * Math.sin(mid);
-        const approachR = 58;
+        const approachR = 82;
         const approachAngleSpan = Math.PI * 0.4;
 
         return (
@@ -102,7 +102,7 @@ function ClusterTaxonomyDesktop() {
             transition={{ delay: 0.5 + qi * 0.15, duration: 0.5, type: 'spring' }}
             style={{ transformOrigin: `${clusterCx}px ${clusterCy}px` }}
           >
-            <circle cx={clusterCx} cy={clusterCy} r={32} fill={cluster.color} stroke={cluster.activeFill} strokeWidth={1.5} opacity={0.9} />
+            <circle cx={clusterCx} cy={clusterCy} r={44} fill={cluster.color} stroke={cluster.activeFill} strokeWidth={2} opacity={0.9} />
             {(() => {
               const words = cluster.label.split(' ');
               const lines: string[] = [];
@@ -113,7 +113,7 @@ function ClusterTaxonomyDesktop() {
               }
               if (cur) lines.push(cur);
               return lines.map((line, li) => (
-                <text key={li} x={clusterCx} y={clusterCy + (li - (lines.length - 1) / 2) * 11} textAnchor="middle" dominantBaseline="central" fill={TEXT_COLOR} fontSize={8} fontWeight={600} fontFamily="system-ui, sans-serif">{line}</text>
+                <text key={li} x={clusterCx} y={clusterCy + (li - (lines.length - 1) / 2) * 14} textAnchor="middle" dominantBaseline="central" fill={TEXT_COLOR} fontSize={11} fontWeight={600} fontFamily="system-ui, sans-serif">{line}</text>
               ));
             })()}
 
@@ -124,8 +124,8 @@ function ClusterTaxonomyDesktop() {
               return (
                 <motion.g key={approach} initial={{ opacity: 0, scale: 0.3 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.8 + qi * 0.15 + ai * 0.08, duration: 0.35 }}>
                   <line x1={clusterCx} y1={clusterCy} x2={ax} y2={ay} stroke={cluster.color} strokeWidth={1} opacity={0.4} />
-                  <rect x={ax - 38} y={ay - 12} width={76} height={24} rx={12} fill={cluster.activeFill} opacity={0.85} />
-                  <text x={ax} y={ay} textAnchor="middle" dominantBaseline="central" fill={TEXT_COLOR} fontSize={8} fontWeight={500} fontFamily="system-ui, sans-serif">{approach}</text>
+                  <rect x={ax - 52} y={ay - 15} width={104} height={30} rx={15} fill={cluster.activeFill} opacity={0.85} />
+                  <text x={ax} y={ay} textAnchor="middle" dominantBaseline="central" fill={TEXT_COLOR} fontSize={11} fontWeight={500} fontFamily="system-ui, sans-serif">{approach}</text>
                 </motion.g>
               );
             })}
@@ -135,9 +135,9 @@ function ClusterTaxonomyDesktop() {
         );
       })}
 
-      <motion.circle cx={cx} cy={cy} r={hubR} fill={CENTER_COLOR} stroke="oklch(0.60 0.18 270)" strokeWidth={2.5} initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.5, type: 'spring' }} />
-      <motion.text x={cx} y={cy - 10} textAnchor="middle" dominantBaseline="central" fill={TEXT_COLOR} fontSize={10} fontWeight={700} fontFamily="system-ui, sans-serif" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>Authentic Student</motion.text>
-      <motion.text x={cx} y={cy + 6} textAnchor="middle" dominantBaseline="central" fill={TEXT_COLOR} fontSize={10} fontWeight={700} fontFamily="system-ui, sans-serif" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>Learning</motion.text>
+      <motion.circle cx={cx} cy={cy} r={hubR} fill={CENTER_COLOR} stroke="oklch(0.60 0.18 270)" strokeWidth={3} initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.5, type: 'spring' }} />
+      <motion.text x={cx} y={cy - 12} textAnchor="middle" dominantBaseline="central" fill={TEXT_COLOR} fontSize={14} fontWeight={700} fontFamily="system-ui, sans-serif" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>Authentic Student</motion.text>
+      <motion.text x={cx} y={cy + 8} textAnchor="middle" dominantBaseline="central" fill={TEXT_COLOR} fontSize={14} fontWeight={700} fontFamily="system-ui, sans-serif" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>Learning</motion.text>
     </svg>
   );
 }

@@ -84,7 +84,11 @@ export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
         body: JSON.stringify({ text }),
       });
 
-      if (!res.ok) return null;
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        console.warn("TTS API failed:", res.status, errData);
+        return null;
+      }
 
       const arrayBuffer = await res.arrayBuffer();
       const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });

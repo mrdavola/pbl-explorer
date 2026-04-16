@@ -531,32 +531,39 @@ function Step10({ onNext }: { onNext: () => void }) {
           </li>
         </ul>
 
-        {/* Venn diagram concept */}
-        <div className="flex items-center justify-center gap-0 mb-4">
-          <motion.div
-            initial={{ x: 20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="w-28 h-28 rounded-full border-2 flex items-center justify-center text-xs font-bold text-center px-2"
-            style={{ borderColor: "oklch(0.45 0.15 15)", color: "oklch(0.45 0.15 15)" }}
-          >
-            PBL<br />Why &amp; What
-          </motion.div>
-          <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="w-28 h-28 rounded-full border-2 flex items-center justify-center text-xs font-bold text-center px-2 -ml-8"
-            style={{ borderColor: MODULE_COLOR, color: MODULE_COLOR }}
-          >
-            DT<br />How
-          </motion.div>
-        </div>
+        {/* Venn diagram — SVG for proper overlap rendering */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="mb-4"
+        >
+          <svg viewBox="0 0 320 200" className="w-full max-w-xs mx-auto" aria-label="Venn diagram: PBL plus Design Thinking equals PBL by Design">
+            {/* PBL circle */}
+            <circle cx="120" cy="100" r="72" fill="oklch(0.45 0.15 15 / 0.08)" stroke="oklch(0.45 0.15 15)" strokeWidth="2.5" />
+            {/* DT circle */}
+            <circle cx="200" cy="100" r="72" fill="oklch(0.60 0.12 60 / 0.08)" stroke="oklch(0.60 0.12 60)" strokeWidth="2.5" />
+            {/* Overlap highlight */}
+            <clipPath id="pbl-clip"><circle cx="120" cy="100" r="72" /></clipPath>
+            <circle cx="200" cy="100" r="72" fill="oklch(0.50 0.14 35 / 0.18)" clipPath="url(#pbl-clip)" />
+
+            {/* Labels */}
+            <text x="90" y="95" textAnchor="middle" className="text-xs font-bold" fill="oklch(0.45 0.15 15)" fontSize="13">PBL</text>
+            <text x="90" y="112" textAnchor="middle" className="text-[10px]" fill="oklch(0.45 0.15 15 / 0.7)" fontSize="10">Why &amp; What</text>
+
+            <text x="230" y="95" textAnchor="middle" className="text-xs font-bold" fill="oklch(0.60 0.12 60)" fontSize="13">DT</text>
+            <text x="230" y="112" textAnchor="middle" className="text-[10px]" fill="oklch(0.60 0.12 60 / 0.8)" fontSize="10">How</text>
+
+            {/* Overlap label */}
+            <text x="160" y="94" textAnchor="middle" className="text-xs font-bold" fill="oklch(0.35 0.12 35)" fontSize="11">PBL by</text>
+            <text x="160" y="110" textAnchor="middle" className="text-xs font-bold" fill="oklch(0.35 0.12 35)" fontSize="11">Design</text>
+          </svg>
+        </motion.div>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="text-sm font-semibold"
+          className="text-sm font-semibold text-center"
           style={{ color: MODULE_COLOR }}
         >
           PBL + Design Thinking = PBL by Design

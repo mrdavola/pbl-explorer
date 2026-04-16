@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -49,23 +49,25 @@ export function LessonShell({
     <div className="flex flex-col min-h-[100dvh] bg-background">
       {/* Top bar */}
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border/50">
-        <div className="flex items-center gap-3 px-4 py-3 max-w-2xl mx-auto w-full">
-          {currentStep > 0 ? (
+        <div className="flex items-center gap-2 px-4 py-3 max-w-2xl mx-auto w-full">
+          {/* Always-visible home button */}
+          <Link
+            href="/"
+            className="p-2 -ml-2 rounded-xl hover:bg-muted transition-colors press-scale"
+            aria-label="Back to home"
+          >
+            <Home className="w-5 h-5 text-muted-foreground" />
+          </Link>
+
+          {/* Back button — only when past step 0 */}
+          {currentStep > 0 && (
             <button
               onClick={goPrev}
-              className="p-2 -ml-2 rounded-xl hover:bg-muted transition-colors press-scale"
+              className="p-2 -ml-1 rounded-xl hover:bg-muted transition-colors press-scale"
               aria-label="Previous step"
             >
               <ArrowLeft className="w-5 h-5 text-muted-foreground" />
             </button>
-          ) : (
-            <Link
-              href="/"
-              className="p-2 -ml-2 rounded-xl hover:bg-muted transition-colors press-scale"
-              aria-label="Back to home"
-            >
-              <X className="w-5 h-5 text-muted-foreground" />
-            </Link>
           )}
 
           {/* Progress bar */}

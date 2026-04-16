@@ -5,6 +5,7 @@ import { FlipCardGrid } from "@/components/interactions/flip-card";
 import { MatchingPairs } from "@/components/interactions/matching-pairs";
 import { SliderSpectrum } from "@/components/interactions/slider-spectrum";
 import { ChoiceCards } from "@/components/interactions/choice-cards";
+import { ApproachExplorer } from "@/components/interactions/approach-explorer";
 import { ContinueButton } from "@/components/learn/lesson-shell";
 import { GoDeeper } from "@/components/learn/go-deeper";
 import { ClusterTaxonomy } from "@/components/diagrams/cluster-taxonomy";
@@ -115,8 +116,58 @@ function Step2({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 3 — Matching Pairs: match acronyms to definitions */
+/* Step 3 — Approach Explorer: learn what each one means */
 function Step3({ onNext }: { onNext: () => void }) {
+  return (
+    <ApproachExplorer
+      title="Meet the Approaches"
+      subtitle="Tap each one to see what makes it unique."
+      approaches={[
+        {
+          name: "Project-Based Learning",
+          category: "Project/Problem",
+          studentsDo: "Create a sustained public product driven by a meaningful question.",
+          example: "Design a local recycling campaign for the school community.",
+        },
+        {
+          name: "Problem-Based Learning",
+          category: "Project/Problem",
+          studentsDo: "Investigate and solve a complex, open-ended problem.",
+          example: "Figure out why the school garden isn't growing and fix it.",
+        },
+        {
+          name: "Inquiry-Based Learning",
+          category: "Project/Problem",
+          studentsDo: "Generate questions and direct their own research.",
+          example: "Research why some neighborhoods have more parks than others.",
+        },
+        {
+          name: "Challenge-Based Learning",
+          category: "Purpose",
+          studentsDo: "Identify a real-world challenge and take action on it.",
+          example: "Reduce food waste in the cafeteria by 50%.",
+        },
+        {
+          name: "Design Thinking",
+          category: "Making/Design",
+          studentsDo: "Empathize with users, prototype solutions, and iterate.",
+          example: "Redesign the school library to be more welcoming for all students.",
+        },
+        {
+          name: "STEAM",
+          category: "Content Lens",
+          studentsDo: "Apply science, tech, engineering, art, and math through hands-on making.",
+          example: "Build a working model bridge that holds the most weight.",
+        },
+      ]}
+      onComplete={onNext}
+      moduleColor={MODULE_COLOR}
+    />
+  );
+}
+
+/* Step 4 — Matching Pairs: match acronyms to definitions */
+function Step4({ onNext }: { onNext: () => void }) {
   return (
     <MatchingPairs
       pairs={[
@@ -135,8 +186,8 @@ function Step3({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 4 — Key Comparisons Part 1 */
-function Step4({ onNext }: { onNext: () => void }) {
+/* Step 5 — Key Comparisons Part 1 */
+function Step5({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
@@ -164,8 +215,8 @@ function Step4({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 5 — Key Comparisons Part 2 */
-function Step5({ onNext }: { onNext: () => void }) {
+/* Step 6 — Key Comparisons Part 2 */
+function Step6({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
@@ -193,8 +244,8 @@ function Step5({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 6 — Lens vs Method Distinction */
-function Step6({ onNext }: { onNext: () => void }) {
+/* Step 7 — Lens vs Method Distinction */
+function Step7({ onNext }: { onNext: () => void }) {
   const cards = [
     {
       title: "STEM / STEAM",
@@ -257,8 +308,8 @@ function Step6({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 7 — Slider Spectrum: student-driven scale */
-function Step7({ onNext }: { onNext: () => void }) {
+/* Step 8 — Slider Spectrum: student-driven scale */
+function Step8({ onNext }: { onNext: () => void }) {
   return (
     <SliderSpectrum
       question="How student-driven is each approach? Explore the spectrum."
@@ -278,8 +329,8 @@ function Step7({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 8 — Sort Quiz */
-function Step8({ onNext }: { onNext: () => void }) {
+/* Step 9 — Sort Quiz */
+function Step9({ onNext }: { onNext: () => void }) {
   return (
     <ScenarioQuiz
       question="STEM is a ___."
@@ -295,8 +346,8 @@ function Step8({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 9 — Builder Moment: Choice Cards */
-function Step9({ onNext }: { onNext: () => void }) {
+/* Step 10 — Builder Moment: Choice Cards */
+function Step10({ onNext }: { onNext: () => void }) {
   return (
     <div>
       <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: MODULE_COLOR }}>Building your plan</div>
@@ -318,8 +369,8 @@ function Step9({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 10 — Go Deeper */
-function Step10({ onNext }: { onNext: () => void }) {
+/* Step 11 — Go Deeper */
+function Step11({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1">
       <motion.div {...fadeUp}>
@@ -331,8 +382,8 @@ function Step10({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 11 — Completion */
-function Step11({ onNext }: { onNext: () => void }) {
+/* Step 12 — Completion */
+function Step12({ onNext }: { onNext: () => void }) {
   return (
     <div className="flex flex-col flex-1 items-center justify-center text-center">
       <motion.h2
@@ -380,12 +431,13 @@ function Step11({ onNext }: { onNext: () => void }) {
   );
 }
 
-export const module6Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Step11];
+export const module6Steps = [Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8, Step9, Step10, Step11, Step12];
 
 export const module6NarrateTexts: string[] = [
   "Project-Based, Problem-Based, Challenge-Based, Design Thinking — teachers hear these terms used interchangeably all the time. They're related, but they're not the same. Let's untangle them.",
   "Here's the big picture: PBL is the broadest framework. Other approaches either fit inside it, overlap with it, or are something different entirely — like a content lens or a time format rather than a teaching method.",
-  "Let's match each acronym to what drives it. PBL is driven by meaningful questions. Problem-Based Learning focuses on solving complex problems. Inquiry-Based Learning follows student questions. Challenge-Based Learning is about taking action on real issues.",
+  "Let's meet each approach. Project-Based Learning creates sustained public products. Problem-Based Learning solves open-ended problems. Inquiry-Based Learning follows student questions. Challenge-Based Learning takes action on real issues. Design Thinking empathizes and prototypes. And STEAM applies cross-curricular making.",
+  "Now let's match each acronym to what drives it. PBL is driven by meaningful questions. Problem-Based Learning focuses on solving complex problems. Inquiry-Based Learning follows student questions. Challenge-Based Learning is about taking action on real issues.",
   "How is Problem-Based Learning different from PBL? It focuses on solving a specific case, often in days to weeks. PBL is broader — students learn through a sustained project that results in a public product. Design Thinking is a creative process that can be used within PBL.",
   "Challenge-Based Learning differs because students identify the challenge themselves — it's student-driven from the very start. Inquiry-Based Learning is the research engine inside PBL — it's about asking questions and investigating, but doesn't always result in a product.",
   "Not everything with an acronym is a teaching method. STEM is a content lens describing what you teach. Genius Hour is a time format. Service Learning is about civic action. They can all be combined with PBL, but they're different categories.",

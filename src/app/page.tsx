@@ -1,65 +1,91 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+import { Flame, Sparkles } from "lucide-react";
+import { modules } from "@/lib/data/modules";
+import { useProgress } from "@/lib/hooks/use-progress";
+import { LearningPath } from "@/components/path/learning-path";
+import { ProgressRing } from "@/components/learn/progress-ring";
 
 export default function Home() {
+  const { progress, loaded, completedCount } = useProgress();
+  const totalModules = modules.length;
+  const progressPercent = (completedCount / totalModules) * 100;
+
+  if (!loaded) {
+    return (
+      <div className="flex items-center justify-center min-h-[100dvh]">
+        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-[100dvh] bg-background">
+      {/* Header */}
+      <header className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border/50">
+        <div className="flex items-center justify-between px-5 py-3 max-w-2xl mx-auto">
+          <div>
+            <h1 className="text-lg font-bold font-[family-name:var(--font-display)] tracking-tight">
+              PBL Explorer
+            </h1>
+          </div>
+          <div className="flex items-center gap-3">
+            {/* Streak */}
+            <div className="flex items-center gap-1 text-sm font-bold" title="Daily streak">
+              <Flame className="w-4 h-4 text-[oklch(0.60_0.14_80)]" />
+              <span className="tabular-nums">{progress.streak}</span>
+            </div>
+            {/* XP */}
+            <div className="flex items-center gap-1 text-sm font-bold" title="Experience points">
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="tabular-nums">{progress.xp}</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero area with progress ring */}
+      <section className="px-5 pt-8 pb-4 max-w-2xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col items-center text-center mb-8"
+        >
+          <ProgressRing progress={progressPercent} size={100} strokeWidth={7}>
+            <div className="text-center">
+              <span className="text-2xl font-bold tabular-nums">{completedCount}</span>
+              <span className="text-xs text-muted-foreground block -mt-0.5">
+                of {totalModules}
+              </span>
+            </div>
+          </ProgressRing>
+
+          <h2 className="text-2xl font-bold mt-5 mb-1 font-[family-name:var(--font-display)]">
+            {completedCount === 0
+              ? "Welcome to PBL Explorer"
+              : completedCount === totalModules
+                ? "You\u2019re a PBL Expert!"
+                : "Keep going!"}
+          </h2>
+          <p className="text-muted-foreground text-sm max-w-xs">
+            {completedCount === 0
+              ? "Learn Project-Based Learning through interactive lessons."
+              : completedCount === totalModules
+                ? "You\u2019ve completed all modules. Amazing work!"
+                : `${totalModules - completedCount} module${totalModules - completedCount === 1 ? "" : "s"} remaining`}
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        </motion.div>
+
+        {/* Learning path */}
+        <LearningPath
+          modules={modules}
+          completedModules={progress.completedModules}
+        />
+
+        <div className="h-20" />
+      </section>
     </div>
   );
 }

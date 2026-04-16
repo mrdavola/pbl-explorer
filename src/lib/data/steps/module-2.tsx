@@ -148,299 +148,214 @@ function Step2({ onNext }: { onNext: () => void }) {
   );
 }
 
-/* Step 3 — Phase 1 Deep Dive: Entry Event */
+/* Shared phase deep-dive layout */
+interface PhaseData {
+  number: number;
+  name: string;
+  color: string;
+  description: string;
+  teacherActions: string[];
+  studentActions: string[];
+  example: string;
+  exampleLabel: string;
+}
+
+function PhaseDeepDive({ phase, onNext }: { phase: PhaseData; onNext: () => void }) {
+  return (
+    <div className="flex flex-col flex-1">
+      {/* Phase header — big and bold */}
+      <motion.div {...fadeUp} className="mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <span
+            className="w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm font-bold shrink-0"
+            style={{ backgroundColor: phase.color }}
+          >
+            {phase.number}
+          </span>
+          <div>
+            <h2 className="text-2xl font-bold leading-tight">{phase.name}</h2>
+            <p className="text-sm text-muted-foreground">{phase.description}</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Teacher card — full width */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.4 }}
+        className="rounded-2xl border-2 border-border p-5 bg-card mb-3"
+      >
+        <p className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-3">
+          What the teacher does
+        </p>
+        <ul className="space-y-2.5">
+          {phase.teacherActions.map((action, i) => (
+            <li key={i} className="flex items-start gap-2.5 text-sm leading-relaxed">
+              <span className="mt-1 w-1.5 h-1.5 rounded-full shrink-0 bg-muted-foreground/40" />
+              {action}
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+
+      {/* Student card — colored, full width */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.25, duration: 0.4 }}
+        className="rounded-2xl border-2 p-5 text-white mb-4"
+        style={{ backgroundColor: phase.color, borderColor: phase.color }}
+      >
+        <p className="text-sm font-bold uppercase tracking-wider text-white/70 mb-3">
+          What students do
+        </p>
+        <ul className="space-y-2.5">
+          {phase.studentActions.map((action, i) => (
+            <li key={i} className="flex items-start gap-2.5 text-sm leading-relaxed text-white/90">
+              <span className="mt-1 w-1.5 h-1.5 rounded-full shrink-0 bg-white/50" />
+              {action}
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+
+      {/* Classroom example */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+        className="rounded-xl bg-muted/60 border border-border px-5 py-4"
+      >
+        <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1.5">
+          {phase.exampleLabel}
+        </p>
+        <p className="text-sm leading-relaxed italic text-muted-foreground">
+          &ldquo;{phase.example}&rdquo;
+        </p>
+      </motion.div>
+
+      <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
+    </div>
+  );
+}
+
+const phaseDetails: PhaseData[] = [
+  {
+    number: 1,
+    name: "Entry Event",
+    color: "#E8634A",
+    description: "The hook that sparks curiosity and draws students in.",
+    teacherActions: [
+      "Present an engaging entry event — a video, mystery, guest speaker, or real-world problem",
+      "Facilitate open-ended questioning to capture student curiosity",
+      "Document student reactions and initial questions on a visible board",
+    ],
+    studentActions: [
+      "Experience the hook and let curiosity build naturally",
+      "Generate authentic questions about what they noticed",
+      "Connect the experience to things they already know",
+    ],
+    example: "Students arrive to find the classroom transformed into a crime scene. Evidence bags, numbered markers, and a mysterious note. Their mission: figure out what happened using science.",
+    exampleLabel: "Example: A 5th grade science class",
+  },
+  {
+    number: 2,
+    name: "Investigation",
+    color: "#4338CA",
+    description: "Research, skill-building, and developing empathy for the people involved.",
+    teacherActions: [
+      "Guide students through structured research from multiple sources",
+      "Connect students with real experts, community members, or primary sources",
+      "Facilitate empathy-building exercises like interviews or perspective-taking",
+    ],
+    studentActions: [
+      "Research the topic from multiple perspectives and sources",
+      "Build the specific skills they\u2019ll need for the project",
+      "Develop genuine empathy for the people affected by the problem",
+    ],
+    example: "Students researching food deserts interview families in their neighborhood, analyze grocery store maps, and read nutrition data from the CDC.",
+    exampleLabel: "Example: An 8th grade social studies project",
+  },
+  {
+    number: 3,
+    name: "Problem / Design Challenge",
+    color: "#0D7377",
+    description: "Define the driving question that guides all the work ahead.",
+    teacherActions: [
+      "Help students refine their raw questions into a focused driving question",
+      "Facilitate the creation of \u201cNeed to Know\u201d lists that map out learning gaps",
+      "Connect students with subject-matter experts who can add depth",
+    ],
+    studentActions: [
+      "Take ownership of the driving question — make it feel like theirs",
+      "Create and maintain a \u201cNeed to Know\u201d list to guide their learning",
+      "Identify specific skills and knowledge they need to acquire",
+    ],
+    example: "After investigating water quality, the class narrows their driving question to: \u2018How can we, as environmental scientists, create a water testing guide for families in our community?\u2019",
+    exampleLabel: "Example: A 6th grade science project",
+  },
+  {
+    number: 4,
+    name: "Create",
+    color: "#D97706",
+    description: "Ideate, prototype, test, and refine — the heart of the project.",
+    teacherActions: [
+      "Provide materials, tools, and workspace for creation",
+      "Facilitate structured critique and feedback cycles (not just \u201cnice job!\u201d)",
+      "Coach students through the frustration of iteration — normalize revision",
+    ],
+    studentActions: [
+      "Brainstorm multiple ideas before committing to one direction",
+      "Build quick, low-fidelity prototypes to test assumptions early",
+      "Give and receive honest feedback, then revise based on evidence",
+    ],
+    example: "Teams build cardboard scale models of their redesigned school cafeteria, test them with younger students, gather feedback, and rebuild. The third version is always the best.",
+    exampleLabel: "Example: A 4th grade math + design project",
+  },
+  {
+    number: 5,
+    name: "Share",
+    color: "#7C3AED",
+    description: "Present to an authentic audience and reflect on the learning journey.",
+    teacherActions: [
+      "Arrange a real audience beyond the classroom — parents, experts, community members",
+      "Facilitate structured reflection on both the product and the process",
+      "Create space to celebrate effort, growth, and collaboration — not just outcomes",
+    ],
+    studentActions: [
+      "Present their work to people who genuinely care about the topic",
+      "Reflect honestly on what they learned, what surprised them, and what they\u2019d change",
+      "Celebrate their team\u2019s journey and growth through the project",
+    ],
+    example: "Students present their water testing guides at a community health fair. A local nonprofit asks to distribute them. Students see their work making a real difference.",
+    exampleLabel: "Example: The water quality project finale",
+  },
+];
+
+/* Step 3 — Phase 1: Entry Event */
 function Step3({ onNext }: { onNext: () => void }) {
-  return (
-    <div className="flex flex-col flex-1">
-      <motion.div {...fadeUp}>
-        <div className="flex items-center gap-2 mb-3">
-          <span
-            className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold"
-            style={{ backgroundColor: "#E8634A" }}
-          >
-            1
-          </span>
-          <h2 className="text-xl font-bold">Entry Event</h2>
-        </div>
-        <p className="text-sm text-muted-foreground mb-6">
-          The hook that sparks curiosity and draws students in.
-        </p>
-      </motion.div>
-
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="rounded-2xl border-2 border-border p-5 bg-card"
-        >
-          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
-            🧑‍🏫 Teacher
-          </p>
-          <ul className="text-xs text-muted-foreground space-y-2 leading-relaxed">
-            <li>Present the entry event</li>
-            <li>Facilitate questions</li>
-            <li>Capture student reactions</li>
-          </ul>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-          className="rounded-2xl border-2 p-5 text-white"
-          style={{ backgroundColor: "#E8634A", borderColor: "#E8634A" }}
-        >
-          <p className="text-xs font-bold uppercase tracking-wider opacity-80 mb-3">
-            🎒 Student
-          </p>
-          <ul className="text-xs opacity-90 space-y-2 leading-relaxed">
-            <li>Experience the hook</li>
-            <li>Generate questions</li>
-            <li>Connect to prior knowledge</li>
-          </ul>
-        </motion.div>
-      </div>
-
-      <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
-    </div>
-  );
+  return <PhaseDeepDive phase={phaseDetails[0]} onNext={onNext} />;
 }
 
-/* Step 4 — Phase 2 Deep Dive: Investigation */
+/* Step 4 — Phase 2: Investigation */
 function Step4({ onNext }: { onNext: () => void }) {
-  return (
-    <div className="flex flex-col flex-1">
-      <motion.div {...fadeUp}>
-        <div className="flex items-center gap-2 mb-3">
-          <span
-            className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold"
-            style={{ backgroundColor: "#4338CA" }}
-          >
-            2
-          </span>
-          <h2 className="text-xl font-bold">Investigation</h2>
-        </div>
-        <p className="text-sm text-muted-foreground mb-6">
-          Research, skill-building, and developing empathy.
-        </p>
-      </motion.div>
-
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="rounded-2xl border-2 border-border p-5 bg-card"
-        >
-          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
-            🧑‍🏫 Teacher
-          </p>
-          <ul className="text-xs text-muted-foreground space-y-2 leading-relaxed">
-            <li>Guide research processes</li>
-            <li>Connect with resources &amp; experts</li>
-            <li>Facilitate empathy exercises</li>
-          </ul>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-          className="rounded-2xl border-2 p-5 text-white"
-          style={{ backgroundColor: "#4338CA", borderColor: "#4338CA" }}
-        >
-          <p className="text-xs font-bold uppercase tracking-wider opacity-80 mb-3">
-            🎒 Student
-          </p>
-          <ul className="text-xs opacity-90 space-y-2 leading-relaxed">
-            <li>Research from multiple perspectives</li>
-            <li>Build new skills</li>
-            <li>Develop empathy</li>
-          </ul>
-        </motion.div>
-      </div>
-
-      <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
-    </div>
-  );
+  return <PhaseDeepDive phase={phaseDetails[1]} onNext={onNext} />;
 }
 
-/* Step 5 — Phase 3 Deep Dive: Problem / Design Challenge */
+/* Step 5 — Phase 3: Problem / Design Challenge */
 function Step5({ onNext }: { onNext: () => void }) {
-  return (
-    <div className="flex flex-col flex-1">
-      <motion.div {...fadeUp}>
-        <div className="flex items-center gap-2 mb-3">
-          <span
-            className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold"
-            style={{ backgroundColor: "#0D7377" }}
-          >
-            3
-          </span>
-          <h2 className="text-xl font-bold">Problem / Design Challenge</h2>
-        </div>
-        <p className="text-sm text-muted-foreground mb-6">
-          Define the driving question that guides all the work.
-        </p>
-      </motion.div>
-
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="rounded-2xl border-2 border-border p-5 bg-card"
-        >
-          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
-            🧑‍🏫 Teacher
-          </p>
-          <ul className="text-xs text-muted-foreground space-y-2 leading-relaxed">
-            <li>Help refine the driving question</li>
-            <li>Facilitate Need to Know lists</li>
-            <li>Connect students with experts</li>
-          </ul>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-          className="rounded-2xl border-2 p-5 text-white"
-          style={{ backgroundColor: "#0D7377", borderColor: "#0D7377" }}
-        >
-          <p className="text-xs font-bold uppercase tracking-wider opacity-80 mb-3">
-            🎒 Student
-          </p>
-          <ul className="text-xs opacity-90 space-y-2 leading-relaxed">
-            <li>Refine and own the driving question</li>
-            <li>Create a Need to Know list</li>
-            <li>Identify what they need to learn</li>
-          </ul>
-        </motion.div>
-      </div>
-
-      <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
-    </div>
-  );
+  return <PhaseDeepDive phase={phaseDetails[2]} onNext={onNext} />;
 }
 
-/* Step 6 — Phase 4 Deep Dive: Create */
+/* Step 6 — Phase 4: Create */
 function Step6({ onNext }: { onNext: () => void }) {
-  return (
-    <div className="flex flex-col flex-1">
-      <motion.div {...fadeUp}>
-        <div className="flex items-center gap-2 mb-3">
-          <span
-            className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold"
-            style={{ backgroundColor: "#D97706" }}
-          >
-            4
-          </span>
-          <h2 className="text-xl font-bold">Create</h2>
-        </div>
-        <p className="text-sm text-muted-foreground mb-6">
-          Ideate, prototype, test, and refine solutions.
-        </p>
-      </motion.div>
-
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="rounded-2xl border-2 border-border p-5 bg-card"
-        >
-          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
-            🧑‍🏫 Teacher
-          </p>
-          <ul className="text-xs text-muted-foreground space-y-2 leading-relaxed">
-            <li>Provide materials and tools</li>
-            <li>Facilitate critique cycles</li>
-            <li>Coach through iteration</li>
-          </ul>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-          className="rounded-2xl border-2 p-5 text-white"
-          style={{ backgroundColor: "#D97706", borderColor: "#D97706" }}
-        >
-          <p className="text-xs font-bold uppercase tracking-wider opacity-80 mb-3">
-            🎒 Student
-          </p>
-          <ul className="text-xs opacity-90 space-y-2 leading-relaxed">
-            <li>Ideate and brainstorm</li>
-            <li>Build and test prototypes</li>
-            <li>Give/receive feedback and revise</li>
-          </ul>
-        </motion.div>
-      </div>
-
-      <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
-    </div>
-  );
+  return <PhaseDeepDive phase={phaseDetails[3]} onNext={onNext} />;
 }
 
-/* Step 7 — Phase 5 Deep Dive: Share */
+/* Step 7 — Phase 5: Share */
 function Step7({ onNext }: { onNext: () => void }) {
-  return (
-    <div className="flex flex-col flex-1">
-      <motion.div {...fadeUp}>
-        <div className="flex items-center gap-2 mb-3">
-          <span
-            className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold"
-            style={{ backgroundColor: "#7C3AED" }}
-          >
-            5
-          </span>
-          <h2 className="text-xl font-bold">Share</h2>
-        </div>
-        <p className="text-sm text-muted-foreground mb-6">
-          Present to an authentic audience and reflect on learning.
-        </p>
-      </motion.div>
-
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="rounded-2xl border-2 border-border p-5 bg-card"
-        >
-          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
-            🧑‍🏫 Teacher
-          </p>
-          <ul className="text-xs text-muted-foreground space-y-2 leading-relaxed">
-            <li>Arrange an authentic audience</li>
-            <li>Facilitate reflection</li>
-            <li>Celebrate student work</li>
-          </ul>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.4 }}
-          className="rounded-2xl border-2 p-5 text-white"
-          style={{ backgroundColor: "#7C3AED", borderColor: "#7C3AED" }}
-        >
-          <p className="text-xs font-bold uppercase tracking-wider opacity-80 mb-3">
-            🎒 Student
-          </p>
-          <ul className="text-xs opacity-90 space-y-2 leading-relaxed">
-            <li>Present to an authentic audience</li>
-            <li>Reflect on learning</li>
-            <li>Celebrate achievements</li>
-          </ul>
-        </motion.div>
-      </div>
-
-      <ContinueButton onClick={onNext} moduleColor={MODULE_COLOR} />
-    </div>
-  );
+  return <PhaseDeepDive phase={phaseDetails[4]} onNext={onNext} />;
 }
 
 /* Step 8 — Drag-and-Drop Exercise */

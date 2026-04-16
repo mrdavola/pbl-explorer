@@ -20,6 +20,14 @@ export const metadata: Metadata = {
   title: "PBL Explorer — Learn Project-Based Learning",
   description:
     "An interactive learning experience for educators to master Project-Based Learning through bite-sized lessons, quizzes, and hands-on exercises.",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "PBL Explorer",
+  },
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export const viewport: Viewport = {

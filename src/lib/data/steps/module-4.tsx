@@ -383,10 +383,10 @@ function Step8({ onNext }: { onNext: () => void }) {
       </motion.div>
       <DragSort
         items={[
-          { id: "a", label: "A question that drives the whole project", correctZone: "challenging" },
-          { id: "b", label: "Shared beyond the classroom", correctZone: "public" },
-          { id: "c", label: "Give and receive feedback", correctZone: "critique" },
-          { id: "d", label: "Investigate over time", correctZone: "inquiry" },
+          { id: "a", label: "A question that drives the whole project", correctZone: "challenging", wrongFeedback: "A driving question that frames the entire project is what makes a Challenging Problem — it gives students a reason to dig in." },
+          { id: "b", label: "Shared beyond the classroom", correctZone: "public", wrongFeedback: "When work is shared with a real audience outside the classroom, that\u2019s a Public Product — it raises the stakes and makes the work matter." },
+          { id: "c", label: "Give and receive feedback", correctZone: "critique", wrongFeedback: "Giving and receiving feedback is Critique & Revision — it\u2019s how students improve their work through structured peer input." },
+          { id: "d", label: "Investigate over time", correctZone: "inquiry", wrongFeedback: "Ongoing research and exploration over the life of the project is Sustained Inquiry — not a one-time activity, but a continuous process." },
         ]}
         zones={[
           { id: "challenging", label: "Challenging Problem", color: MODULE_COLOR },

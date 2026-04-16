@@ -247,21 +247,25 @@ function Step7({ onNext }: { onNext: () => void }) {
             id: "a",
             label: "Students build a weather station to learn about climate data",
             correctZone: "pbl",
+            wrongFeedback: "Building the weather station IS how students learn the content — they\u2019re learning THROUGH the project, which makes it PBL.",
           },
           {
             id: "b",
             label: "After a biology unit, students make a cell model",
             correctZone: "project",
+            wrongFeedback: "The learning already happened during the unit. The cell model is a follow-up activity — that\u2019s doing a project, not PBL.",
           },
           {
             id: "c",
             label: "Teams design a school garden to study ecosystems",
             correctZone: "pbl",
+            wrongFeedback: "Students are studying ecosystems BY designing the garden — the project drives the learning, making this PBL.",
           },
           {
             id: "d",
             label: "Teacher assigns a diorama after reading a novel",
             correctZone: "project",
+            wrongFeedback: "The diorama comes after the reading is done — it\u2019s a product to show learning, not a vehicle for learning. That\u2019s doing a project.",
           },
         ]}
         zones={[

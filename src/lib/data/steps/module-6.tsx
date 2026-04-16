@@ -72,23 +72,23 @@ function Step2({ onNext }: { onNext: () => void }) {
       >
         {/* Outer ring — PBL */}
         <div
-          className="relative rounded-full flex items-center justify-center"
+          className="relative rounded-full flex flex-col items-center justify-center"
           style={{
-            width: 280,
-            height: 280,
+            width: 300,
+            height: 300,
             backgroundColor: "oklch(0.50 0.16 270 / 0.12)",
             border: "2px solid oklch(0.50 0.16 270 / 0.4)",
           }}
         >
           <span
-            className="absolute top-3 left-1/2 -translate-x-1/2 text-xs font-bold uppercase tracking-wider"
+            className="text-xs font-bold uppercase tracking-wider mb-2"
             style={{ color: MODULE_COLOR }}
           >
             Project-Based Learning
           </span>
 
           {/* Inner bubbles */}
-          <div className="flex flex-wrap gap-2 justify-center items-center px-4 pt-4">
+          <div className="flex flex-wrap gap-2 justify-center items-center px-8">
             {[
               { label: "Problem-Based", delay: 0.3 },
               { label: "Design Thinking", delay: 0.4 },

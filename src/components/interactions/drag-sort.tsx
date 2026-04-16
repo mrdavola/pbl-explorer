@@ -9,6 +9,7 @@ interface DragSortItem {
   id: string;
   label: string;
   correctZone: string;
+  wrongFeedback?: string;
 }
 
 interface DragSortProps {
@@ -27,6 +28,7 @@ export function DragSort({
   const [placed, setPlaced] = useState<Record<string, string>>({});
   const [feedback, setFeedback] = useState<Record<string, "correct" | "wrong">>({});
   const [activeItem, setActiveItem] = useState<string | null>(null);
+  const [wrongMessage, setWrongMessage] = useState<string | null>(null);
   const allPlaced = Object.keys(placed).length === initialItems.length;
   const allCorrect = allPlaced && Object.values(feedback).every((f) => f === "correct");
 
@@ -45,8 +47,13 @@ export function DragSort({
       }));
       setActiveItem(null);
 
-      // If wrong, remove after a short delay so they can retry
+      // If wrong, show feedback and remove after a delay so they can retry
       if (!isCorrect) {
+        const correctZone = zones.find((z) => z.id === item.correctZone);
+        setWrongMessage(
+          item.wrongFeedback ||
+            `That belongs in "${correctZone?.label ?? item.correctZone}." Try again!`
+        );
         setTimeout(() => {
           setPlaced((prev) => {
             const next = { ...prev };
@@ -58,10 +65,11 @@ export function DragSort({
             delete next[itemId];
             return next;
           });
-        }, 1200);
+          setWrongMessage(null);
+        }, 2400);
       }
     },
-    [initialItems]
+    [initialItems, zones]
   );
 
   const handleReset = useCallback(() => {
@@ -160,6 +168,20 @@ export function DragSort({
           );
         })}
       </div>
+
+      {/* Wrong answer feedback */}
+      <AnimatePresence>
+        {wrongMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            className="mt-3 rounded-xl bg-error-light px-4 py-3 text-sm text-[oklch(0.30_0.08_25)]"
+          >
+            <span className="font-semibold">Not quite!</span> {wrongMessage}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Complete */}
       {allCorrect && (

@@ -374,31 +374,37 @@ function Step8({ onNext }: { onNext: () => void }) {
             id: "a",
             label: "Students watch a documentary about ocean pollution",
             correctZone: "phase1",
+            wrongFeedback: "A documentary sparks curiosity and hooks students into the topic — that\u2019s the Entry Event, the very first phase.",
           },
           {
             id: "b",
             label: "Teams research local water quality data from the EPA",
             correctZone: "phase2",
+            wrongFeedback: "Gathering data from real sources is research — that\u2019s the Investigation phase, where students dig into the topic.",
           },
           {
             id: "c",
             label: "Class creates a 'Need to Know' list on the whiteboard",
             correctZone: "phase3",
+            wrongFeedback: "A \u2018Need to Know\u2019 list helps frame what the class needs to solve — that\u2019s the Problem / Design Challenge phase.",
           },
           {
             id: "d",
             label: "Groups build a water filtration prototype",
             correctZone: "phase4",
+            wrongFeedback: "Building a prototype is hands-on making — that\u2019s the Create phase, where students turn ideas into something real.",
           },
           {
             id: "e",
             label: "Students present solutions to a panel of community members",
             correctZone: "phase5",
+            wrongFeedback: "Presenting to a real audience is the Share phase — it brings the Learning Narrative full circle.",
           },
           {
             id: "f",
             label: "Students interview a local environmental scientist",
             correctZone: "phase2",
+            wrongFeedback: "Interviewing an expert is primary research — that belongs in the Investigation phase alongside other data gathering.",
           },
         ]}
         zones={[

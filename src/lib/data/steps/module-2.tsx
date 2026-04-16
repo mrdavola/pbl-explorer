@@ -65,8 +65,8 @@ function Step1({ onNext }: { onNext: () => void }) {
         style={{ backgroundColor: MODULE_COLOR, borderColor: MODULE_COLOR }}
       >
         <div className="text-4xl mb-4">📖</div>
-        <h3 className="text-xl font-bold mb-2">They both follow a story structure.</h3>
-        <p className="text-sm opacity-90 leading-relaxed">
+        <h3 className="text-xl font-bold mb-2 text-white">They both follow a story structure.</h3>
+        <p className="text-sm text-white/90 leading-relaxed">
           Great PBL units unfold like a narrative &mdash; with a hook, rising action, a
           climax of creation, and a resolution where students share their work
           with the world.

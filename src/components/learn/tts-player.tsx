@@ -10,11 +10,14 @@ interface TTSPlayerProps {
 }
 
 type PlayerState = "idle" | "loading" | "playing" | "paused" | "error";
+type TTSMode = "elevenlabs" | "browser";
 
 export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
   const [state, setState] = useState<PlayerState>("idle");
+  const [mode, setMode] = useState<TTSMode>("elevenlabs");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const blobUrlRef = useRef<string | null>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   // Clean up on unmount or step change
   useEffect(() => {
@@ -28,6 +31,10 @@ export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
         URL.revokeObjectURL(blobUrlRef.current);
         blobUrlRef.current = null;
       }
+      if (typeof window !== "undefined" && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      utteranceRef.current = null;
     };
   }, [stepKey]);
 
@@ -43,9 +50,14 @@ export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
       URL.revokeObjectURL(blobUrlRef.current);
       blobUrlRef.current = null;
     }
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    utteranceRef.current = null;
   }, [stepKey]);
 
-  const getAudio = useCallback(async (): Promise<string> => {
+  // Try ElevenLabs, return blob URL on success
+  const tryElevenLabs = useCallback(async (): Promise<string | null> => {
     const cacheKey = `tts-cache-${stepKey}`;
 
     // Check localStorage cache
@@ -58,86 +70,140 @@ export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
           bytes[i] = binary.charCodeAt(i);
         }
         const blob = new Blob([bytes], { type: "audio/mpeg" });
-        const url = URL.createObjectURL(blob);
-        return url;
+        return URL.createObjectURL(blob);
       }
     } catch {
-      // Cache miss or error, proceed to fetch
+      // Cache miss
     }
 
     // Fetch from API
-    const res = await fetch("/api/tts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
-    });
-
-    if (!res.ok) {
-      throw new Error("TTS generation failed");
-    }
-
-    const arrayBuffer = await res.arrayBuffer();
-    const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
-
-    // Cache as base64
     try {
-      const bytes = new Uint8Array(arrayBuffer);
-      let binary = "";
-      for (let i = 0; i < bytes.length; i++) {
-        binary += String.fromCharCode(bytes[i]);
-      }
-      const base64 = btoa(binary);
-      localStorage.setItem(cacheKey, base64);
-    } catch {
-      // localStorage full or unavailable, continue without caching
-    }
+      const res = await fetch("/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
 
-    return URL.createObjectURL(blob);
+      if (!res.ok) return null;
+
+      const arrayBuffer = await res.arrayBuffer();
+      const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
+
+      // Cache as base64
+      try {
+        const bytes = new Uint8Array(arrayBuffer);
+        let binary = "";
+        for (let i = 0; i < bytes.length; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        localStorage.setItem(cacheKey, btoa(binary));
+      } catch {
+        // localStorage full, continue
+      }
+
+      return URL.createObjectURL(blob);
+    } catch {
+      return null;
+    }
   }, [stepKey, text]);
 
+  // Browser Speech Synthesis fallback
+  const playBrowserTTS = useCallback(() => {
+    if (!window.speechSynthesis) return false;
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+
+    // Prefer a natural-sounding English voice
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = voices.find(
+      (v) =>
+        v.lang.startsWith("en") &&
+        (v.name.includes("Microsoft") ||
+          v.name.includes("Google") ||
+          v.name.includes("Samantha") ||
+          v.name.includes("Daniel"))
+    ) || voices.find((v) => v.lang.startsWith("en") && v.localService);
+
+    if (preferred) utterance.voice = preferred;
+
+    utterance.onend = () => setState("idle");
+    utterance.onerror = () => {
+      setState("error");
+      setTimeout(() => setState("idle"), 2000);
+    };
+
+    utteranceRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+    return true;
+  }, [text]);
+
   const handlePlay = useCallback(async () => {
-    // If paused, resume
+    // If paused with browser TTS, resume
+    if (state === "paused" && mode === "browser") {
+      window.speechSynthesis?.resume();
+      setState("playing");
+      return;
+    }
+
+    // If paused with audio element, resume
     if (state === "paused" && audioRef.current) {
       audioRef.current.play();
       setState("playing");
       return;
     }
 
-    // If already playing, pause
-    if (state === "playing" && audioRef.current) {
-      audioRef.current.pause();
+    // If playing, pause
+    if (state === "playing") {
+      if (mode === "browser") {
+        window.speechSynthesis?.pause();
+      } else if (audioRef.current) {
+        audioRef.current.pause();
+      }
       setState("paused");
       return;
     }
 
     // Start fresh
     setState("loading");
-    try {
-      const url = await getAudio();
-      if (blobUrlRef.current) {
-        URL.revokeObjectURL(blobUrlRef.current);
-      }
+
+    // Try ElevenLabs first
+    const url = await tryElevenLabs();
+
+    if (url) {
+      // ElevenLabs succeeded
+      setMode("elevenlabs");
+      if (blobUrlRef.current) URL.revokeObjectURL(blobUrlRef.current);
       blobUrlRef.current = url;
 
       const audio = new Audio(url);
       audioRef.current = audio;
-
-      audio.addEventListener("ended", () => {
-        setState("idle");
-      });
-
+      audio.addEventListener("ended", () => setState("idle"));
       audio.addEventListener("error", () => {
         setState("error");
         setTimeout(() => setState("idle"), 2000);
       });
 
-      await audio.play();
-      setState("playing");
-    } catch {
-      setState("error");
-      setTimeout(() => setState("idle"), 2000);
+      try {
+        await audio.play();
+        setState("playing");
+      } catch {
+        setState("error");
+        setTimeout(() => setState("idle"), 2000);
+      }
+    } else {
+      // Fallback to browser Speech Synthesis
+      setMode("browser");
+      const ok = playBrowserTTS();
+      if (ok) {
+        setState("playing");
+      } else {
+        setState("error");
+        setTimeout(() => setState("idle"), 2000);
+      }
     }
-  }, [state, getAudio]);
+  }, [state, mode, tryElevenLabs, playBrowserTTS]);
 
   // Hide during error after brief display
   if (state === "error") {

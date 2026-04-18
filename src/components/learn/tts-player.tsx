@@ -10,11 +10,11 @@ interface TTSPlayerProps {
 }
 
 type PlayerState = "idle" | "loading" | "playing" | "paused" | "error";
-type TTSMode = "elevenlabs" | "browser";
+type TTSMode = "gemini" | "browser";
 
 export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
   const [state, setState] = useState<PlayerState>("idle");
-  const [mode, setMode] = useState<TTSMode>("elevenlabs");
+  const [mode, setMode] = useState<TTSMode>("gemini");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const blobUrlRef = useRef<string | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
@@ -56,9 +56,9 @@ export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
     utteranceRef.current = null;
   }, [stepKey]);
 
-  // Try ElevenLabs, return blob URL on success
-  const tryElevenLabs = useCallback(async (): Promise<string | null> => {
-    const cacheKey = `tts-cache-${stepKey}`;
+  // Try Gemini TTS, return blob URL on success
+  const tryGemini = useCallback(async (): Promise<string | null> => {
+    const cacheKey = `tts-cache-v2-${stepKey}`;
 
     // Check localStorage cache
     try {
@@ -69,7 +69,7 @@ export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
         for (let i = 0; i < binary.length; i++) {
           bytes[i] = binary.charCodeAt(i);
         }
-        const blob = new Blob([bytes], { type: "audio/mpeg" });
+        const blob = new Blob([bytes], { type: "audio/wav" });
         return URL.createObjectURL(blob);
       }
     } catch {
@@ -91,7 +91,7 @@ export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
       }
 
       const arrayBuffer = await res.arrayBuffer();
-      const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
+      const blob = new Blob([arrayBuffer], { type: "audio/wav" });
 
       // Cache as base64
       try {
@@ -172,12 +172,12 @@ export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
     // Start fresh
     setState("loading");
 
-    // Try ElevenLabs first
-    const url = await tryElevenLabs();
+    // Try Gemini first
+    const url = await tryGemini();
 
     if (url) {
-      // ElevenLabs succeeded
-      setMode("elevenlabs");
+      // Gemini succeeded
+      setMode("gemini");
       if (blobUrlRef.current) URL.revokeObjectURL(blobUrlRef.current);
       blobUrlRef.current = url;
 
@@ -207,7 +207,7 @@ export function TTSPlayer({ text, stepKey }: TTSPlayerProps) {
         setTimeout(() => setState("idle"), 2000);
       }
     }
-  }, [state, mode, tryElevenLabs, playBrowserTTS]);
+  }, [state, mode, tryGemini, playBrowserTTS]);
 
   // Hide during error after brief display
   if (state === "error") {
